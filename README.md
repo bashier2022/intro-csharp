@@ -2,4 +2,4 @@
 
 * first lesson
 * second lesson
-* third lesson
+* Third lesson
