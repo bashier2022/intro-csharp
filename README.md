@@ -1,5 +1,5 @@
 # intro-csharp
 
-* first lesson
+* First lesson
 * second lesson
 * Third lesson
