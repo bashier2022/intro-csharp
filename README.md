@@ -1,9 +1,9 @@
 # intro-csharp
 ---
 * First lesson
-* Second lesson
+* Second Lesson
 * Third lesson
 * 4th Lesson
 
 we will learn how to implement shared projects.
-github is our sync. env. 
+github is our cloud repo for team work
