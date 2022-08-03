@@ -45,6 +45,39 @@ namespace lesson_01
             double[] lst_03 = { 2.5, 7.1, -4.009 };
             print_doubles(lst_03);
         }
+        static void print_doubles_V2(double[] lst)
+        {
+            //        1. write a function that will print an array of double
+            //          double[] a = { 1.1, 3.0, 5.2 };
+            //          print(a);
+            //          will print: [1.1, 3.0, 5.2 ]
+            if (lst is null)
+            {
+                Console.WriteLine("Nothing");
+                return;
+            }
+            Console.Write("[");
+            
+            for (int i = 1; i < lst.Length; i++)
+            {
+                Console.Write($"{lst[i]}, ");
+            }
+            if (lst.Length  > 0)
+            {
+                Console.Write($"{lst[lst.Length-1]}");
+            }
+            Console.WriteLine("]");
+        }
+        static void test_print_doubles_V2()
+        {
+            print_doubles_V2(null);
+            double[] lst_01 = { };
+            print_doubles_V2(lst_01);
+            double[] lst_02 = { 2.5 };
+            print_doubles_V2(lst_02);
+            double[] lst_03 = { 2.5, 7.1, -4.009 };
+            print_doubles_V2(lst_03);
+        }
 
         static double sum_of_doubles(double[] lst)
         {
@@ -133,6 +166,8 @@ namespace lesson_01
             test_sum_of_doubles();
 
             Test_SolveQuadratic();
+
+            test_print_doubles_V2();
 
         }
     }
