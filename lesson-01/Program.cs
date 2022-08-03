@@ -3,16 +3,6 @@ namespace lesson_01
 {
     internal class Program
     {
-        
-
-        
-        //3. function that will compute the average of a double[]
-        //    - be ware of gotchas
-
-
-        //4. write a function that will solve quadratic formula like we did in python
-
-        //    SolveQuadratic(4, -2, 3)  // to solve 4x^2-2x+3 = 0
         static void print_doubles(double[] lst)
         {
             //        1. write a function that will print an array of double
@@ -51,6 +41,7 @@ namespace lesson_01
             //          double[] a = { 1.1, 3.0, 5.2 };
             //          print(a);
             //          will print: [1.1, 3.0, 5.2 ]
+            Console.WriteLine("V2");
             if (lst is null)
             {
                 Console.WriteLine("Nothing");
