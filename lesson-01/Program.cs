@@ -15,7 +15,7 @@ namespace lesson_01
                 return;
             }
             Console.Write("[");
-            if (lst.Length >= 1)
+            if (lst.Length > 0)
             {
                 Console.Write($"{lst[0]}");
             }
@@ -150,6 +150,133 @@ namespace lesson_01
             SolveQuadratic(0, 0, 1);
             SolveQuadratic(0, 0, 0);
         }
+
+        //3. is_magic  : function will test if a 2D array[,]  is magic square
+
+
+        static void Print2D(int[,] arr)
+        {
+            // print 2D normal array[,]
+            int n = 0;
+            int m = 0;
+            string c_1 = "";
+            string c_2 = "";
+            Console.WriteLine("Printing 2D Array");
+            if (arr != null)
+            {
+                n = arr.GetLength(0);
+                m = arr.GetLength(1);
+                c_1 = "["; c_2 = "]";
+                Console.WriteLine(c_1);
+                for (int i = 0; i < n; i++)
+                {
+                    Console.Write($"  {c_1} {arr[i, 0]}");
+                    for (int j = 1; j < m; j++)
+                    {
+                        Console.Write($", {arr[i, j]}");
+                    }
+                    Console.WriteLine($"{c_2}");
+                }
+                Console.WriteLine(c_2);
+            }
+        }
+        static void Print2D_Jagged(int[][] J_arr)
+        {
+            //2. print 2D jagged array[][ ]
+            Console.WriteLine("Printing Jadded Array");
+            string c_1 = "[";
+            string c_2 = "]";
+            if (J_arr != null)
+            {
+                Console.WriteLine(c_1);
+                for (int i = 0; i < J_arr.Length; i++)
+                {
+                    Console.Write($"  {c_1}");
+                    if (J_arr[i] != null)
+                    {
+                        if (J_arr[i].Length > 0) { Console.Write($"{J_arr[i][0]}"); }
+                        for (int j = 1; j < J_arr[i].Length; j++)
+                        {
+                            Console.Write($", {J_arr[i][j]}");
+                        }
+                    }
+                    Console.WriteLine(c_2);
+                }
+                Console.WriteLine(c_2);
+            }
+        }
+        static void Test_Print2D()
+        {
+
+            int[,] sqaure = { { 8, 1, 6 },
+                              { 3, 5, 7 },
+                              { 4, 9, 3 } };
+            int[][] J_sqaure = new int[3][] {
+                                                new int[3]{ 8, 1, 6 },
+                                                new int[2], //null, //new int[2]{ 5, 7 },
+                                                new int[4]{ 4, 9, 3, 5 }
+                                            };
+
+            Print2D(sqaure);
+            sqaure = null;
+            Print2D(sqaure);
+            sqaure = new int[2,3] ;
+            Print2D(sqaure);
+            Print2D_Jagged(J_sqaure);
+
+        }
+        static int sum_row(int[,] square, int r)
+        {
+            int sum = 0;
+            int n = square.GetLength(0);
+            for (int c = 0; c < n; c++) { sum += square[r, c]; }
+            return sum;
+        }
+        static int sum_col(int[,] square, int c)
+        {
+            int sum = 0;
+            int n = square.GetLength(0);
+            for (int r = 0; r < n; r++) { sum += square[r, c]; }
+            return sum;
+        }
+
+        static int sum_first_diagonal(int[,] square)
+        {
+            int sum = 0;
+            int n = square.GetLength(0);
+            for (int i = 0; i < n; i++) { sum += square[i, i]; }
+            return sum;
+        }
+        static int sum_second_diagonal(int[,] square)
+        {
+            int sum = 0;
+            int n = square.GetLength(0);
+            for (int i = 0; i < n; i++) { sum += square[i, n - i - 1]; }
+            return sum;
+        }
+        static bool is_magic_square(int[,] square)
+        {
+            //3. is_magic  : function will test if a 2D array[,]  is magic square
+            bool ok = true;
+            int n = square.GetLength(0);
+            int m = square.GetLength(1);
+            int s = 0;
+            if (n!= m) { ok = false; }
+            s = sum_row(square, 0);
+
+            for (int r = 0; r < n; r++)
+            {
+                ok = ok && (s == sum_row(square, r));
+            }
+            for (int c = 0; c < n; c++)
+            {
+                ok = ok && (s == sum_row(square, c));
+            }
+            ok = ok && (s == sum_first_diagonal(square));
+            ok = ok && (s == sum_second_diagonal(square));
+            return ok;
+        }
+
         static void Main(string[] args)
         {
             test_print_doubles();
@@ -159,6 +286,13 @@ namespace lesson_01
             Test_SolveQuadratic();
 
             test_print_doubles_V2();
+
+            Test_Print2D();
+            int[,] sqaure = { { 8, 1, 6 },
+                              { 3, 5, 7 },
+                              { 4, 9, 3 } };
+
+            Console.WriteLine(is_magic_square(sqaure));
 
         }
     }
