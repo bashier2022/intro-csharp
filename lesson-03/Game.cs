@@ -83,7 +83,7 @@ namespace lesson_03
         {
             int rows = board.GetLength(0);
             int columns = board.GetLength(1);
-            int c = 0;
+
             for (int i = 1; i < rows - 1; i++)
             {
                 for (int j = 1; j < columns -1; j++)
