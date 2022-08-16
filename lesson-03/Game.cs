@@ -17,12 +17,12 @@ namespace lesson_03
         {
             rows = rows + 2;
             columns = columns + 2;
-            this.board = new CellState[rows, columns];
+            board = new CellState[rows, columns];
         }
 
         public void TurnOn(int i, int j)
         {
-            this.board[i, j] = CellState.IsAlive;
+            board[i, j] = CellState.IsAlive;
         }
         public bool IsAlive(int i, int j) => board[i, j] == CellState.IsAlive;
         public void TurnOff(int i, int j)
