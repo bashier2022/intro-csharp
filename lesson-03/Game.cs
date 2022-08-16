@@ -126,8 +126,8 @@ namespace lesson_03
             {
                 for (int j = 1; j < columns -1; j++)
                 {
-                    c = this.CountNeighbors(i, j);
-                    if (this.IsAlive(i, j))
+                    c = CountNeighbors(i, j);
+                    if (IsAlive(i, j))
                     {
                         if (c == 2 || c==3)
                         {
