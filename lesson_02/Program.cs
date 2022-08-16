@@ -46,11 +46,12 @@
         static int[,] ZeroBoard(int n, int m)
         {
             int[,] A = new int[n, m];
-            for (int i = 1; i < n - 2; i++)
+            for (int i = 0; i < n; i++)
             {
-                for (int j = 1; j < m - 2; j++)
+                for (int j = 0; j < m; j++)
                 {
-                    A[i, j] = 0;                }
+                    A[i, j] = 0; 
+                }
             }
             return A;
         }
@@ -74,15 +75,25 @@
                 for(int j= 0; j < A.GetLength(1); j++)
                     B[i,j] = A[i,j];
         }
+        static void reset_Game_Board(int[,] B)
+        {
+            //for (int i = 0; i < B.GetLength(0); i++)
+            //    for (int j = 0; j < B.GetLength(1); j++)
+            //        B[i, j] = 0;
+            Console.WriteLine("vor Clearing");
+            PrintBoard(B);
+            Array.Clear(B, 0, B.GetLength(0) * B.GetLength(1));
+            Console.WriteLine("after cleaning");
+            PrintBoard(B);
+        }
         static bool Populated(int[,] board, int i, int j)
         {
             return board[i, j] == 1;
         }
-        static void Calculate_Next_Generation(int[,] board)
+        static void Calculate_Next_Generation(int[,] board, int[,] A)
         {
             int n = board.GetLength(0);
             int m = board.GetLength(1);
-            int[,] A = ZeroBoard(n, m);
 
             for (int i = 1; i < n - 1; i++)
             {
@@ -111,21 +122,26 @@
                     }
                 }
             }
-            Copy_To_Values(A, board);
+            //Copy_To_Values(A, board);
         }
         static void Main(string[] args)
         {
             //int n = 40;
             //int m = 40;
             int[,] board; // = new int[n + 2, m + 2];
-            board = ReadBoard();
             int k = 10;
+            board = ReadBoard();
+            int n = board.GetLength(0);
+            int m = board.GetLength(1);
+            int[,] next_generation = ZeroBoard(n, m);
             while (k>0)
             {
+                reset_Game_Board(next_generation);
                 PrintBoard(board);
                 Console.Write("Calculate next generation? [press enter] : ");
                 Console.ReadLine();
-                Calculate_Next_Generation(board);
+                Calculate_Next_Generation(board, next_generation);
+                Copy_To_Values(next_generation, board);
                 k -= 1;
 
             }
