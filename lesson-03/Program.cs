@@ -9,7 +9,7 @@
                 { 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
                 { 0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
                 { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 1, 1, 0, 0, 0},
+                { 0, 0, 1, 1, 0, 1, 1, 0, 0, 0},
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 { 0, 0, 0, 0, 0, 0, 0, 1, 1, 1},
                 { 0, 0, 0, 1, 0, 0, 0, 0, 1, 1},
@@ -50,11 +50,11 @@
                 {
                     if (row_st[j] == '1')
                     {
-                        game.turnon(i+1, j+1); 
+                        game.TurnOn(i+1, j+1); 
                     }
                     else
                     {
-                        game.turnoff(i+1, j+1);
+                        game.TurnOff(i+1, j+1);
                     }
                 }
             }
@@ -65,13 +65,13 @@
             Game game = new Game(10,10);
             int[,] matrix = Create_Matrix();
 
-            //game.Fill_Board(matrix);
+            game.Fill_Board(matrix);
             //game.Fill_Board_From_Array_of_strings(Create_String_Array());
-            Fill_Life_Board(game);
+            // Fill_Life_Board(game);
             for(int i = 0; i < 10; i++)
             {
-                game.print();
-                game.next_generation();
+                Console.WriteLine(game);
+                game.ComputeNextGeneration();
                 Console.Write("Go  : [enter]");
                 Console.ReadLine();
             }

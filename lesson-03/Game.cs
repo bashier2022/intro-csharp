@@ -8,79 +8,71 @@ namespace lesson_03
 {
     public class Game
     {
-        private char ch_dead = '-';
-        private char ch_alive = '*';
+        private char DEAD_CHAR = '-';
+        private char LIVE_CHAR = '*';
 
-        private CellState[,] board_02;
-        public CellState[,] board;
-
-        private int rows;
-        private int columns;
+        private CellState[,] board;
 
         public Game(int rows, int columns)
         {
-            this.rows = rows + 2;
-            this.columns = columns + 2;
-            this.board = new CellState[this.rows, this.columns];
-            this.board_02 = new CellState[this.rows, this.columns];
-            for (int i = 0; i < rows; i++)
-                for (int j = 0; j < columns; j++)
-                {
-                    this.turnoff(i, j);
-                }
-            this.Reset_Board_02();
+            rows = rows + 2;
+            columns = columns + 2;
+            this.board = new CellState[rows, columns];
         }
 
-        public void turnon(int i, int j)
+        public void TurnOn(int i, int j)
         {
             this.board[i, j] = CellState.IsAlive;
         }
-        public bool IsTurnon(int i, int j)
-        {
-            return this.board[i, j] == CellState.IsAlive;
-        }
-        public void turnoff(int i, int j)
+        public bool IsAlive(int i, int j) => board[i, j] == CellState.IsAlive;
+        public void TurnOff(int i, int j)
         {
             this.board[i, j] = CellState.IsDead;
         }
-        public bool IsTurnoff(int i, int j)
-        {
-            return this.board[i, j] == CellState.IsDead;
-        }
-        public void print()
-        {
-            for (int i = 1; i < this.rows - 1; i++)
+        public bool IsDead(int i, int j) => board[i, j] == CellState.IsDead;
+
+        public override string ToString()
+        {        
+            int rows = board.GetLength(0);
+            int columns = board.GetLength(1);
+            var sb = new StringBuilder();
+
+            for (int i = 1; i < rows - 1; i++)
             {
-                for (int j = 1; j < this.columns - 1; j++)
+                for (int j = 1; j < columns - 1; j++)
                 {
-                    if (this.IsTurnon(i,j))
+                    if (this.IsAlive(i,j))
                     {
-                        Console.Write(ch_alive);
+                        sb.Append(LIVE_CHAR);
                     }
                     else
                     {
-                        Console.Write(ch_dead);
+                        sb.Append(DEAD_CHAR);
                     }
                 }
-                Console.WriteLine();
+               sb.Append("\n");
             }
+            return sb.ToString();
         }
 
         public void Fill_Board_From_Array_of_strings(string[] arr_str)
         {
-            for (int i = 0; i < this.rows - 2; i++)
+            int rows = board.GetLength(0);
+            int columns = board.GetLength(1);
+
+            for (int i = 0; i < rows - 2; i++)
             {
                 string row_st = arr_str[i];
                 Console.WriteLine($"r({i}) =: {row_st}");
-                for (int j = 0; j < this.columns - 2; j++)
+                for (int j = 0; j < columns - 2; j++)
                 {
                     if (row_st[j] == '1')
                     {
-                        this.turnon(i+1, j+1); // this.board[i+1, j+1] = CellState.IsAlive;
+                        this.TurnOn(i+1, j+1); 
                     }
                     else
                     {
-                        this.turnoff(i+1, j+1); // this.board[i+1, j+1] = CellState.IsDead;
+                        this.TurnOff(i+1, j+1); 
                     }
                 }
             }
@@ -88,24 +80,26 @@ namespace lesson_03
 
         public void Fill_Board(int[,] matrix)
         {
-            for (int i = 1; i < this.rows - 1; i++)
+            int rows = board.GetLength(0);
+            int columns = board.GetLength(1);
+
+            for (int i = 1; i < rows - 1; i++)
             {
-                for (int j = 1; j < this.columns - 1; j++)
+                for (int j = 1; j < columns - 1; j++)
                 {
-                    //this.board[i, j] = (CellState)matrix[i-1, j-1];
-                    if (matrix[i-1, j-1] == 0)
+                    if (matrix[i-1, j-1] == 1)
                     {
-                        this.turnon(i, j);
+                        this.TurnOn(i, j);
                     }
                     else
                     {
-                        this.turnoff(i, j);
+                        this.TurnOff(i, j);
                     }
                 }
             }
         }
 
-        private int count_neighbors(int i, int j)
+        private int CountNeighbors(int i, int j)
         {
             int c = 0;
 
@@ -120,57 +114,40 @@ namespace lesson_03
 
             return c;
         }
-        private void copy_values_to_board()
+
+        public void ComputeNextGeneration()
         {
-            for (int i = 1; i < this.rows - 1; i++)
-            {
-                for (int j = 1; j < this.columns -1; j++)
-                {
-                    this.board[i, j] = this.board_02[i, j];
-                }
-            }
-        }
-        public void next_generation()
-        {
+            int rows = board.GetLength(0);
+            int columns = board.GetLength(1);
+
+            var board_02 = new CellState[rows, columns];
             int c = 0;
-            for (int i = 1; i < this.rows - 1; i++)
+            for (int i = 1; i < rows - 1; i++)
             {
-                for (int j = 1; j < this.columns -1; j++)
+                for (int j = 1; j < columns -1; j++)
                 {
-                    c = this.count_neighbors(i, j);
-                    if (this.IsTurnon(i, j))
+                    c = this.CountNeighbors(i, j);
+                    if (this.IsAlive(i, j))
                     {
                         if (c == 2 || c==3)
                         {
-                            this.board_02[i, j] = CellState.IsAlive;
+                            board_02[i, j] = CellState.IsAlive;
                         }
                         else
                         {
-                            this.board_02[i, j] = CellState.IsDead;
+                            board_02[i, j] = CellState.IsDead;
                         }
                     }
                     else
                     {
                         if (c==3)
                         {
-                            this.board_02[i, j] = CellState.IsAlive;
+                            board_02[i, j] = CellState.IsAlive;
                         }
                     }
                 }
             }
-            this.copy_values_to_board();
-            this.Reset_Board_02();
-        }
-
-        private void Reset_Board_02()
-        {
-            for (int i = 1; i < this.rows - 1; i++)
-            {
-                for (int j = 1; j < this.columns - 1; j++)
-                {
-                    this.board_02[i, j] = CellState.IsDead;
-                }
-            }
+            board = board_02;
         }
     }
 }
