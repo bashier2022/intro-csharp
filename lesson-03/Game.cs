@@ -8,8 +8,8 @@ namespace lesson_03
 {
     public class Game
     {
-        private char DEAD_CHAR = '-';
-        private char LIVE_CHAR = '*';
+        private const char DEAD_CHAR = '-';
+        private const char LIVE_CHAR = '*';
 
         private CellState[,] board;
 
