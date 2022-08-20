@@ -8,15 +8,15 @@ namespace lesson_4
 {
     public class LendBook
     {
-        public string ISBN  { get; set; }
-        public string ID   { get; set; }
+        public Person person  { get; set; }
+        public Book book   { get; set; }
         public DateTime date { get; set; }
 
-        public LendBook(string iSBN, string iD, DateTime lending_date)
+        public LendBook(Person _person, Book _book) 
         {
-            ISBN = iSBN;
-            ID = iD;
-            date = lending_date;
+            person = _person;
+            book = _book;
+            date = DateTime.Now;
         }
     }
 }

@@ -8,110 +8,97 @@ namespace lesson_4
 {
     public class Catalog
     {
-        private List<Book> _books;
-        private Dictionary<string, List<LendBook>> _lendedBooksDict; // the string is the book ISBN
-
+        private Dictionary<string, Book> _catalogOfBooks;
+        private Dictionary<string, Book> _titleOfBooks;// string is the title of the book
+        private Dictionary<string, List<Book>> _authorOfBooks; // string is the name of the author
         public Catalog()
         {
-            _books = new List<Book>();
-            _lendedBooksDict = new Dictionary<string, List<LendBook>>();
+            _catalogOfBooks = new Dictionary<string, Book>();
+            _titleOfBooks = new Dictionary<string, Book>();
+            _authorOfBooks = new Dictionary<string, List<Book>>();
         }
-        public List<Book> Books
+        public Dictionary<string, Book> Books
         {
-            get { return _books; }
+            get { return _catalogOfBooks; }
         }
-        public Dictionary<string, List<LendBook>> LendedBooksDict
-        {
-            get { return _lendedBooksDict; }
-        }
+
         public (bool ok, Book b) findByTitle(string title)
         {
-            foreach (Book bb in _books) { if (bb.Title == title) return (true, bb); }
-            return (true, null);
+            Book book;
+            if (_titleOfBooks.TryGetValue(title, out book))
+            {
+                return (true, _titleOfBooks[title]);
+            }
+            else
+            {
+                return (false, null);
+            }
         }
 
         public (bool ok, Book b) findByISBN(string isbn)
         {
-            foreach (Book bb in _books) { if (bb.Title == isbn) return (true, bb); }
-            return (true, null);
+            if (_catalogOfBooks.TryGetValue(isbn, out Book b))
+            {
+                return (true, b);
+            }
+            else
+            {
+                return (false, null);
+            }            
         }
-        public bool isAuthorOfTheBook(Book bb, string author)
+
+        public (bool ok, List<Book> bookList) findByAuthor(string author)
         {
-            return bb.Authors.Contains(author);
+            if (_authorOfBooks.TryGetValue(author, out List<Book> bookList))
+            {
+                return (true, bookList);
+            }
+            else
+            {
+                return (false, null);
+            }
         }
-        public List<Book> findByAuthor(string author)
-        {
-            List<Book> result = new List<Book>();
-            foreach (Book bb in _books) { if (isAuthorOfTheBook(bb, author)) result.Add(bb); }
-            return result;
-        }
+        
         public (bool ok, Book b) isBookInLibrary(Book book)
         {
-            foreach (Book bb in _books) { if (bb.Isbn == book.Isbn) return (true, bb); }
-            return (false, book);
+            if (_catalogOfBooks.TryGetValue(book.Isbn, out Book b))
+            {
+                return (true, b);
+            }
+            else
+            {
+                return (false, book);
+            }
+        }
+
+        public void AddAuthorToDict(Book nb) // the Book nb will be added for the first time
+        {
+            foreach (Person author in nb.Authors)
+            {
+                var (found, lst_books) = findByAuthor(author.Name);
+                if (found)
+                {
+                    _authorOfBooks[author.Name].Add(nb); // the book will be added to an existing Author
+                }
+                else
+                {
+                    _authorOfBooks.Add(author.Name, new List<Book> { nb });
+                }
+            }
         }
         public void add(Book nb)
         {
-            var (ok , book) = isBookInLibrary(nb);
+            var (ok, book) = isBookInLibrary(nb);
             if (ok)
             {
-                book.copies = book.copies + book.copies;
+                book.Copies = book.Copies + nb.Copies;
             }
             else
             {
-                _books.Add(nb);
+                _catalogOfBooks.Add(nb.Isbn, nb);
+                _titleOfBooks.Add(nb.Title, nb);
+                AddAuthorToDict(nb);
             }
         }
-
-        private void addAlendedBookToDictionary(Book bm, Person p)
-        {
-            string isbn = bm.Isbn;
-            LendBook lb = new LendBook(isbn, p.Id.ToString(), DateTime.Now);
-            List<LendBook> lst;
-            if (_lendedBooksDict.ContainsKey(isbn))
-            {
-                lst=_lendedBooksDict[isbn];
-                lst.Add(lb);
-            }
-            else
-            {
-                lst = new List<LendBook>();
-                lst.Add(lb);
-                _lendedBooksDict.Add(isbn, lst);
-            }
-        }
-      
-        public (bool lended, string message) lendBook(string isbn, Person whome) // for 1 week
-        {
-            var (ok, book) = findByISBN(isbn);
-            if (ok)
-            {
-                if (book.IsAvailable)
-                {
-                    return (true, "the book was lended");
-                    // procedure for lending a book
-                    book.lendBook();
-                    addAlendedBookToDictionary(book, whome);
-                }
-                else { return (false, "No more Copies for book to be lended"); }
-            }
-            else
-            {
-                return (false, "the book is not available");
-            }
-        }
-        public void giveBack(string isbn, Person whome)
-        {
-
-        }
-
-        public string report() // all users who did not return books in time
-        {
-            StringBuilder sb = new StringBuilder();
-
-            return sb.ToString();
-        }
-
-
     }
 }
