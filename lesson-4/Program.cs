@@ -66,7 +66,7 @@ namespace lesson_4
 
             Console.WriteLine(catalog.Books.Count);
             TestCatalog(catalog);
-            b3 = new Book("Engineering Real Time Systems", authors2, "3333", 5);
+            b3 = new Book("Engineering Real Time Systems", authors2, "0130", 5);
             catalog.add(b3);
             TestCatalog(catalog);
             TestSearchByAuthor(catalog);
