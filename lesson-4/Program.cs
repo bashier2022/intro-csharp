@@ -48,11 +48,13 @@ namespace lesson_4
         {
             Console.WriteLine("Hello, World!");
             Book b1, b2, b3, b4;
-            Person p1, p2, p3, p4;
+            Person p1, p2, p3, p4, p5;
             p1 = new Person("1111", "Ronald V. Book", "USA");
             p2 = new Person("2222", "Friedrich Otto", "Kassel Germany");
             p3 = new Person("3333", "Rolv Break", "London");
             p4 = new Person("4444", "Oystein Haugen", "Norweg");
+            p5 = new Person("5555", "Bashier Watted", "jatt");
+
             List<Person> authors1 = new List<Person>() { p1, p2 };
             List<Person> authors2 = new List<Person>() { p3, p4 };
             List<Person> authors3 = new List<Person>() { p2 };
@@ -66,7 +68,7 @@ namespace lesson_4
 
             Console.WriteLine(catalog.Books.Count);
             TestCatalog(catalog);
-            b3 = new Book("Engineering Real Time Systems", authors2, "0130", 5);
+            b3 = new Book("Engineering Real Time Systems", authors2, "0130", 4);
             catalog.add(b3);
             TestCatalog(catalog);
             TestSearchByAuthor(catalog);
@@ -76,15 +78,28 @@ namespace lesson_4
 
             LendingBooks lend_book = new LendingBooks();
 
-            lend_book.lendBook(catalog, b4, p4);
+            lend_book.lendBook(catalog, b4, p5);
 
             Console.WriteLine(lend_book.LendedBooksDict.Count);
 
-            var (lended, message) = lend_book.lendBook(catalog, b2, p2);
+            var (lended, message) = lend_book.lendBook(catalog, b2, p5);
             Console.WriteLine(message);
             Console.WriteLine(lend_book.LendedBooksDict.Count);
             Console.WriteLine(lend_book.report());
-            
+            (lended, message) = lend_book.lendBook(catalog, b1, p5);
+            Console.WriteLine(message);
+            Console.WriteLine(lend_book.LendedBooksDict.Count);
+            Console.WriteLine(lend_book.report());
+            (lended, message) = lend_book.lendBook(catalog, b1, p2);
+            Console.WriteLine(message);
+            Console.WriteLine(lend_book.LendedBooksDict.Count);
+            Console.WriteLine(lend_book.report());
+            (lended, message) = lend_book.lendBook(catalog, b1, p1);
+            Console.WriteLine(message);
+            Console.WriteLine(lend_book.LendedBooksDict.Count);
+            Console.WriteLine(lend_book.report());
+
+
         }
     }
 }
