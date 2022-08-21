@@ -98,7 +98,11 @@ namespace lesson_4
             Console.WriteLine(message);
             Console.WriteLine(lend_book.LendedBooksDict.Count);
             Console.WriteLine(lend_book.report());
-
+            var (back, mes) = lend_book.giveBack(catalog, b1, p2);
+            Console.WriteLine(back);
+            Console.WriteLine(mes);
+            Console.WriteLine(lend_book.LendedBooksDict.Count);
+            Console.WriteLine(lend_book.report());
 
         }
     }

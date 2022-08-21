@@ -17,10 +17,7 @@ namespace lesson_4
             _titleOfBooks = new Dictionary<string, Book>();
             _authorOfBooks = new Dictionary<string, List<Book>>();
         }
-        public Dictionary<string, Book> Books
-        {
-            get { return _catalogOfBooks; }
-        }
+        public Dictionary<string, Book> Books => _catalogOfBooks; 
 
         public (bool ok, Book b) findByTitle(string title)
         {
