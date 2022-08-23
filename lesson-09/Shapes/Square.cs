@@ -21,5 +21,10 @@ namespace Shapes
         {
             return _side * _side;
         }
+        public override void Scale(double factor)
+        {
+            _side *= factor;
+        }
+        public override int Dimentions() => 2;
     }
 }

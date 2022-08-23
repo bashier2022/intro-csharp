@@ -10,7 +10,8 @@ namespace Shapes
     {
         public abstract string Name { get; }
         public abstract double Area();
-
+        public abstract int Dimentions();
+        public abstract void Scale(double factor);
         public double PaintVolume(double thickness)
         {
             var s = Area();
