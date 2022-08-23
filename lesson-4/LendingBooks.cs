@@ -8,25 +8,24 @@ namespace lesson_4
 {
     public class LendingBooks
     {
-        private Dictionary<string, List<LendBook>> _lendedBooksDict = new Dictionary<string, List<LendBook>>(); // the string is the book ISBN
+        private Dictionary<string, List<LendBook>> _lendedBooksDict = new(); // the string is the book ISBN
+        
         public Dictionary<string, List<LendBook>> LendedBooksDict => _lendedBooksDict;
 
         private void addAlendedBookToDictionary(Person p, Book b)
-        {
-            string isbn = b.Isbn;
-            string id = p.Id.ToString();
-            LendBook lb = new LendBook(p, b);
-            List<LendBook> lst;
-            if (_lendedBooksDict.ContainsKey(isbn))
+        {                        
+            LendBook lb = new LendBook(p, b);                        
+            if (_lendedBooksDict.ContainsKey(b.Isbn))
             {
-                lst=_lendedBooksDict[isbn];
+                var lst = _lendedBooksDict[b.Isbn];
                 lst.Add(lb);
             }
             else
             {
-                lst = new List<LendBook>();
-                lst.Add(lb);
-                _lendedBooksDict.Add(isbn, lst);
+                var lst = new List<LendBook>() { lb };                
+                _lendedBooksDict.Add(b.Isbn, lst);
+
+                // _lendedBooksDict.Add(b.Isbn, new() { lb });
             }
         }
 
@@ -47,7 +46,7 @@ namespace lesson_4
         {
             book.ReturnTheBook();
             //// change the lenden Dictionary
-            List<LendBook> lst = _lendedBooksDict[book.Isbn];
+            var lst = _lendedBooksDict[book.Isbn];
             foreach (LendBook lb in lst)
             {
                 if (person.Id == lb.person.Id)
@@ -62,12 +61,9 @@ namespace lesson_4
         public int CountTheLendedBooks()
         {
             int c = 0;
-            foreach (var item in LendedBooksDict.Values)
+            foreach (var lst in LendedBooksDict.Values)
             {
-                foreach (LendBook lendBook in item)
-                {
-                    c++;
-                }
+               c += lst.Count;
             }
             return c;
         }
