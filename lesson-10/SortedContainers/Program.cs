@@ -9,6 +9,21 @@
                 Console.WriteLine($"SortedNumberArray({i}) = {sna.get(i)}");
             }
         }
+
+        static void FillRandoms(SortedNumbers sn, int n)
+        {
+            Console.WriteLine($"Filling with {n} Randoms ------in {sn.GetType()}-------------");
+
+            Random rnd = new Random();
+            int x;
+            for(int i = 0; i < n; i++)
+            {
+                x = rnd.Next(0, 10);
+                Console.WriteLine($"adding { x}");
+                sn.Add(x);
+            }
+            Print(sn);
+        }
         static void Main(string[] args)
         {
 
@@ -40,6 +55,9 @@
             Console.WriteLine($"after deleting {x}-------------------");
             sn.Remove(x);
             Print(sn);
+
+            FillRandoms(new SortedNumbersArray(100), 20);
+            FillRandoms(new SorteNumbersList(), 20);
 
         }
     }
