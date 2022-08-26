@@ -26,19 +26,40 @@ namespace SortedContainers
             return true;
         }
 
+        public void Clear()
+        {
+            _numbersList = new List<int>();
+        }
+
         public int Count() => _numbersList.Count;
         
-        public int get(int index) => _numbersList[index];
+        public int Get(int index) => _numbersList[index];
         
-        public int max() => _numbersList[_numbersList.Count-1];
+        public int Max() => _numbersList[_numbersList.Count-1];
         
-        public int min() => _numbersList[0];
+        public int Min() => _numbersList[0];
         
         public bool Remove(int value)
         {
             int c = _numbersList.Count;
             _numbersList.Remove(value);
             return c>_numbersList.Count;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("[");
+            if (Count() >= 1)
+            {
+                sb.Append(Get(0));
+                for (int i = 1; i < Count(); i++)
+                {
+                    sb.Append($", {Get(i)}");
+                }
+            }
+            sb.Append("]");
+            return sb.ToString();
         }
 
     }

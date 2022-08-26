@@ -8,11 +8,12 @@ namespace SortedContainers
 {
     public interface  SortedNumbers
     {
-        int max();
-        int min();
+        int Max();
+        int Min();
         int Count();
         bool Add(int value);
         bool Remove(int value);
-        int get(int index);
+        int Get(int index);
+        void Clear();        
     }
 }

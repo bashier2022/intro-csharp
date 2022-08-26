@@ -35,9 +35,14 @@ namespace SortedContainers
             }
         }
 
+        public void Clear()
+        {
+            _length = 0;
+        }
+
         public int Count() => _length;
 
-        public int get(int index)
+        public int Get(int index)
         {
             //if (index < 0 || index >= _length)
             //{
@@ -46,7 +51,7 @@ namespace SortedContainers
            return _array[index];
         }
 
-        public int max()
+        public int Max()
         {
             if (_length > 0)
             {
@@ -58,7 +63,7 @@ namespace SortedContainers
             }
         }
 
-        public int min()
+        public int Min()
         {
             if (_length > 0)
             {
@@ -92,6 +97,22 @@ namespace SortedContainers
                 _length--;
             }
             return found;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("[");
+            if (Count() >= 1)
+            {
+                sb.Append(Get(0));
+                for (int i = 1; i < Count(); i++)
+                {
+                    sb.Append($", {Get(i)}");
+                }
+            }
+            sb.Append("]");
+            return sb.ToString();
         }
     }
 }
