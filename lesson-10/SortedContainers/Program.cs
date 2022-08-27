@@ -4,10 +4,6 @@
     {
         static void Print(SortedNumbers sn)
         {
-            //for(int i=0; i<sna.Count(); i++)
-            //{
-            //    Console.WriteLine($"SortedNumbers({i}) = {sna.Get(i)}");
-            //}
             Console.WriteLine($"Data Type = {sn.GetType()}, Data = {sn}");
         }
 
@@ -20,11 +16,9 @@
             for(int i = 0; i < n; i++)
             {
                 x = rnd.Next(0, 10);
-                //Console.WriteLine($"adding { x}");
                 sn.Add(x);
             }
             Print(sn);
-            Console.WriteLine(sn);
         }
 
         public static void TestingHomeWork(SortedNumbers sn)
@@ -53,17 +47,18 @@
             Console.WriteLine($"after deleting {x}-------------------");
             sn.Remove(x);
             Console.WriteLine(sn);
-            
+
             sn.Clear();
             FillRandoms(sn, 20);
+            Console.WriteLine(sn);
         }
         static void Main(string[] args)
         {
 
             Console.WriteLine("Hello, World!");
 
-            var snl = new SorteNumbersList();
-            var sna = new SortedNumbersArray(100);
+            var snl = new SorteNumbersList(false);
+            var sna = new SortedNumbersArray(100, false);
 
             Console.WriteLine("------------ Testing the Sorted List ----------------");
             TestingHomeWork(snl);
@@ -71,8 +66,7 @@
             Console.WriteLine("------------ Testing the Sorted Array ----------------");
             TestingHomeWork(sna);
 
-            var f = snl.First();
-            var x = SequenceUtils.First(snl);
+           
         }
     }
 }

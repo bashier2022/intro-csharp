@@ -10,29 +10,99 @@ namespace SortedContainers
     {
         private int[] _array;
         private int _length = 0;
-        public SortedNumbersArray(int n)
+        private bool _ascending = true;
+        public SortedNumbersArray(int n, bool asceding)
         {
             _array = new int[n];
+            _ascending = asceding;
+        }
+        public bool SortedAs => _ascending;
+        
+        private int FindPlaceToAddItem(int x)
+        {
+            bool save_asc = _ascending; 
+            _ascending = true;
+            int left = 0;
+            int right = Count()-1;
+            if (x > Get(right)) // if we use (x > _array[right]), we don't need the var save_asc
+            {
+                _ascending = save_asc;
+                return right+1;
+            }
+            if (x < Get(left))
+            {
+                _ascending = save_asc;
+                return left;
+            }
+
+            int mid = (left+right) / 2;
+
+            while (left < right)
+            {
+                if (x > Get(mid))
+                {
+                    left=mid+1;
+                }
+                else if (x < Get(mid))
+                {
+                    right = mid;
+                }
+                else
+                {
+                    _ascending = save_asc;
+                    return mid;
+                }
+                mid = (left+right) / 2;
+            }
+            _ascending = save_asc;
+            return mid;
+        }
+        private void ShiftRight(int position)
+        {
+            int c = Count();
+            while (c > position)
+            {
+                _array[c] = _array[c-1];
+                c--;
+            }
         }
         public bool Add(int value)
         {
-            int Position = 0;
-            if (_length < _array.Length)
-            {
-                Position = _length;
-                while((Position > 0) && (_array[Position-1] > value))
-                {
-                    _array[Position] = _array[Position-1];
-                    Position--;
-                }
-                _array[Position] = value;
-                _length++;
-                return true;
-            }
-            else
+
+            if (_length >= _array.Length)
             {
                 return false;
             }
+            int position = 0;
+
+            if (Count() > 0)
+            {
+                position = FindPlaceToAddItem(value);
+                ShiftRight(position);
+            }
+            _array[position] = value;
+            _length++;
+            return true;
+        }
+        
+        public bool Add2(int value)
+        {
+
+            if (_length >= _array.Length)
+            {
+                return false;
+            }
+
+            int position = _length;
+
+            while ((position > 0) &&  (_array[position-1] > value))
+            {
+                _array[position] = _array[position-1];
+                position--;
+            }
+            _array[position] = value;
+            _length++;
+            return true;
         }
 
         public void Clear()
@@ -44,13 +114,14 @@ namespace SortedContainers
 
         public int Get(int index)
         {
-            //if (index < 0 || index >= _length)
-            //{
-            //    return _array[_array.Length];
-            //}
-           return _array[index];
-        }
+            int idx = index;
 
+            if (!_ascending)
+            {
+                idx = Count() - 1- index;
+            }
+            return _array[idx];
+        }
         public int Max()
         {
             if (_length > 0)
@@ -90,7 +161,7 @@ namespace SortedContainers
 
             if (found)
             {
-                for(int k = i-1; k < _length-1; k++)
+                for (int k = i-1; k < _length-1; k++)
                 {
                     _array[k] = _array[k+1];
                 }

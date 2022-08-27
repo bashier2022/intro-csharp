@@ -14,6 +14,6 @@ namespace SortedContainers
         bool Add(int value);
         bool Remove(int value);
         int Get(int index);
-        void Clear();        
+        void Clear();
     }
 }
