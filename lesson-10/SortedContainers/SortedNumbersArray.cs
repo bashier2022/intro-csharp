@@ -101,18 +101,7 @@ namespace SortedContainers
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("[");
-            if (Count() >= 1)
-            {
-                sb.Append(Get(0));
-                for (int i = 1; i < Count(); i++)
-                {
-                    sb.Append($", {Get(i)}");
-                }
-            }
-            sb.Append("]");
-            return sb.ToString();
+            return SequenceUtils.AsString(this);
         }
     }
 }

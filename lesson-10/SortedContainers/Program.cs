@@ -1,6 +1,6 @@
 ﻿namespace SortedContainers
 {
-    public class Program
+    public class Program 
     {
         static void Print(SortedNumbers sn)
         {
@@ -8,7 +8,7 @@
             //{
             //    Console.WriteLine($"SortedNumbers({i}) = {sna.Get(i)}");
             //}
-            Console.WriteLine($"Data Type = {sn.GetType()}, Data = {sn.ToString()}");
+            Console.WriteLine($"Data Type = {sn.GetType()}, Data = {sn}");
         }
 
         static void FillRandoms(SortedNumbers sn, int n)
@@ -70,6 +70,9 @@
 
             Console.WriteLine("------------ Testing the Sorted Array ----------------");
             TestingHomeWork(sna);
+
+            var f = snl.First();
+            var x = SequenceUtils.First(snl);
         }
     }
 }
