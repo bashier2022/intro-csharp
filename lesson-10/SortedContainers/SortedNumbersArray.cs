@@ -16,9 +16,18 @@ namespace SortedContainers
             _array = new int[n];
             _ascending = asceding;
         }
-        public bool SortedAs => _ascending;
-        
+        public bool SortedAscending() => _ascending;
+
         private int FindPlaceToAddItem(int x)
+        {
+            int idx = Array.BinarySearch(_array, 0, Count(), x);
+            if (idx < 0)
+            {
+                idx = ~idx;
+            }
+            return idx;
+        }
+        private int FindPlaceToAddItem2(int x)
         {
             bool save_asc = _ascending; 
             _ascending = true;
@@ -27,21 +36,20 @@ namespace SortedContainers
             if (x > Get(right)) // if we use (x > _array[right]), we don't need the var save_asc
             {
                 _ascending = save_asc;
-                return right+1;
+                return right + 1;
             }
             if (x < Get(left))
             {
                 _ascending = save_asc;
                 return left;
             }
-
-            int mid = (left+right) / 2;
-
+            int mid;
             while (left < right)
             {
+                mid = (left + right) / 2;
                 if (x > Get(mid))
                 {
-                    left=mid+1;
+                    left = mid + 1;
                 }
                 else if (x < Get(mid))
                 {
@@ -52,10 +60,9 @@ namespace SortedContainers
                     _ascending = save_asc;
                     return mid;
                 }
-                mid = (left+right) / 2;
             }
             _ascending = save_asc;
-            return mid;
+            return left; // left and right are equals but the mid was not actualized in the last loop by changing left or right
         }
         private void ShiftRight(int position)
         {

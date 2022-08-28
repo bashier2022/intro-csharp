@@ -23,9 +23,9 @@
 
         public static void TestingHomeWork(SortedNumbers sn)
         {
-            sn.Add(8);
             sn.Add(10);
             sn.Add(2);
+            sn.Add(8);
             Console.WriteLine(sn);
             int x = 50;
             Console.WriteLine($"after deleting {x}-------------------");
@@ -58,7 +58,7 @@
             Console.WriteLine("Hello, World!");
 
             var snl = new SorteNumbersList(false);
-            var sna = new SortedNumbersArray(100, false);
+            var sna = new SortedNumbersArray(100, true);
 
             Console.WriteLine("------------ Testing the Sorted List ----------------");
             TestingHomeWork(snl);

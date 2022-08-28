@@ -15,5 +15,6 @@ namespace SortedContainers
         bool Remove(int value);
         int Get(int index);
         void Clear();
+        bool SortedAscending();
     }
 }

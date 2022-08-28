@@ -15,23 +15,10 @@ namespace SortedContainers
             _numbersList = new List<int>();
             _ascending = ascending;
         }
-
-        private bool Compare(int x, int y)
-        {
-            if (!_ascending)
-            {
-                return x < y;
-            }
-            else
-            {
-                return x > y;
-            }
-        }
         public bool Add(int value)
         {
             int position = 0;
-            //while((position < _numbersList.Count) && (_numbersList[position] < value))
-            while ((position < _numbersList.Count) && (Compare(_numbersList[position], value)))
+            while ((position < _numbersList.Count) && (_numbersList[position] < value))
             {
                 position++;
             }
@@ -55,12 +42,12 @@ namespace SortedContainers
             {
                 idx = Count() - 1 - index;
             }
-           return _numbersList[idx];
+            return _numbersList[idx];
         }
         public int Max() => _numbersList[_numbersList.Count-1];
-        
+
         public int Min() => _numbersList[0];
-        
+
         public bool Remove(int value)
         {
             int c = _numbersList.Count;
@@ -68,11 +55,10 @@ namespace SortedContainers
             return c>_numbersList.Count;
         }
 
-
+        public bool SortedAscending() => _ascending;
         public override string ToString()
         {
-            //return SequenceUtils.AsString(this);
-            return this.AsString();
+            return SequenceUtils.AsString(this);
         }
     }
 }
