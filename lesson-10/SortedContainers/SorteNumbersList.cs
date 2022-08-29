@@ -20,7 +20,7 @@ namespace SortedContainers
             int position = 0;
             while ((position < _numbersList.Count) && (_numbersList[position] < value))
             {
-                position++;
+                ++position;
             }
             _numbersList.Insert(position, value);
             return true;
