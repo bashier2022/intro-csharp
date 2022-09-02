@@ -127,5 +127,20 @@ namespace StackCalculator
             label_DisplayInput.Text = val.ToString();
 
         }
+
+        private void Delete_Clear_click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            string op = btn.Text;
+            if (op == "Del")
+            {
+                label_DisplayInput.Text = "0";
+            }
+            else if (op == "Clear")
+            {
+                listBox_Stack.Items.Clear();
+            }
+
+        }
     }
 }

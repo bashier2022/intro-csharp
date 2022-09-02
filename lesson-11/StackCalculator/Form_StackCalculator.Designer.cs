@@ -49,6 +49,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.btn_Dec = new System.Windows.Forms.Button();
+            this.btn_del = new System.Windows.Forms.Button();
+            this.btn_Clear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_1
@@ -191,7 +193,7 @@
             this.listBox_Stack.Location = new System.Drawing.Point(259, 128);
             this.listBox_Stack.Name = "listBox_Stack";
             this.listBox_Stack.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.listBox_Stack.Size = new System.Drawing.Size(124, 224);
+            this.listBox_Stack.Size = new System.Drawing.Size(124, 184);
             this.listBox_Stack.TabIndex = 2;
             // 
             // btn_Push
@@ -210,7 +212,7 @@
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.Red;
-            this.button1.Location = new System.Drawing.Point(389, 108);
+            this.button1.Location = new System.Drawing.Point(389, 131);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(50, 50);
             this.button1.TabIndex = 0;
@@ -222,7 +224,7 @@
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.Red;
-            this.button2.Location = new System.Drawing.Point(389, 164);
+            this.button2.Location = new System.Drawing.Point(389, 187);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(50, 50);
             this.button2.TabIndex = 0;
@@ -234,7 +236,7 @@
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.ForeColor = System.Drawing.Color.Red;
-            this.button3.Location = new System.Drawing.Point(389, 220);
+            this.button3.Location = new System.Drawing.Point(389, 243);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(50, 50);
             this.button3.TabIndex = 0;
@@ -246,7 +248,7 @@
             // 
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button4.ForeColor = System.Drawing.Color.Red;
-            this.button4.Location = new System.Drawing.Point(389, 276);
+            this.button4.Location = new System.Drawing.Point(389, 299);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(50, 50);
             this.button4.TabIndex = 0;
@@ -302,6 +304,30 @@
             this.btn_Dec.UseVisualStyleBackColor = true;
             this.btn_Dec.Click += new System.EventHandler(this.Inc_Dec_click);
             // 
+            // btn_del
+            // 
+            this.btn_del.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_del.ForeColor = System.Drawing.Color.Red;
+            this.btn_del.Location = new System.Drawing.Point(12, 83);
+            this.btn_del.Name = "btn_del";
+            this.btn_del.Size = new System.Drawing.Size(50, 43);
+            this.btn_del.TabIndex = 0;
+            this.btn_del.Text = "Del";
+            this.btn_del.UseVisualStyleBackColor = true;
+            this.btn_del.Click += new System.EventHandler(this.Delete_Clear_click);
+            // 
+            // btn_Clear
+            // 
+            this.btn_Clear.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Clear.ForeColor = System.Drawing.Color.Red;
+            this.btn_Clear.Location = new System.Drawing.Point(259, 318);
+            this.btn_Clear.Name = "btn_Clear";
+            this.btn_Clear.Size = new System.Drawing.Size(124, 43);
+            this.btn_Clear.TabIndex = 0;
+            this.btn_Clear.Text = "Clear";
+            this.btn_Clear.UseVisualStyleBackColor = true;
+            this.btn_Clear.Click += new System.EventHandler(this.Delete_Clear_click);
+            // 
             // Form_StackCalculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -313,6 +339,8 @@
             this.Controls.Add(this.listBox_Stack);
             this.Controls.Add(this.label_DisplayInput);
             this.Controls.Add(this.btn_Push);
+            this.Controls.Add(this.btn_Clear);
+            this.Controls.Add(this.btn_del);
             this.Controls.Add(this.btn_Dec);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.btn_0);
@@ -359,6 +387,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button btn_Dec;
+        private System.Windows.Forms.Button btn_del;
+        private System.Windows.Forms.Button btn_Clear;
     }
 }
 
