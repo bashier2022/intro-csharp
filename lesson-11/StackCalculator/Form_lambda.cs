@@ -10,10 +10,12 @@ using System.Windows.Forms;
 
 namespace StackCalculator
 {
-    public partial class Form_StackCalculator : Form
+    public partial class Form_lambda : Form
     {
+
         private string message = "";
-        public Form_StackCalculator()
+
+        public Form_lambda()
         {
             InitializeComponent();
         }
@@ -56,37 +58,10 @@ namespace StackCalculator
 
         Func<int, int, int> Add = (a, b) => a + b;
         Func<int, int, int> Subtract = (a, b) => a - b;
-        Func<int,int, int> Multiply = (a, b) => a * b;
+        Func<int, int, int> Multiply = (a, b) => a * b;
         Func<int, int, int> Divide = (a, b) => a / b;
-        private int Calculate2(Func<int, int, int> op, int a,int b)
-        {
-            return op(a,b);
-        }
-        private int Calculate(int a, int b, string op)
-        {
-            switch (op)
-            {
-                case "+": return a + b;
-                case "-": return a - b;
-                case "*": return a * b;
-                case "/":
-                    if (b != 0)
-                    {
-                        return a / b;
-                    }
-                    else
-                    {
-                        return 0;
-                    }
-            }
-            return 0;
-        }
-
-        private bool LegalEvaluation(int a, int b, string op)
-        {
-            return (op != "/") || (b != 0);
-        }
-        private void OnOperation_click(object sender, EventArgs e)
+        
+        private void OperationExecute(Func<int,int,int> op)
         {
             int c = listBox_Stack.Items.Count;
 
@@ -96,22 +71,15 @@ namespace StackCalculator
             }
             else
             {
-                Button btn = (Button)sender;
-                string op = btn.Text;
                 int b = int.Parse(listBox_Stack.Items[c - 1].ToString());
                 int a = int.Parse(listBox_Stack.Items[c - 2].ToString());
-                if (LegalEvaluation(a, b, op))
-                {
-                    listBox_Stack.Items.RemoveAt(c - 1);
-                    listBox_Stack.Items.RemoveAt(c - 2);
-                    int result = Calculate(a, b, op);
-                    listBox_Stack.Items.Add(result.ToString());
-                }
-                else
-                {
-                    DisplayMessage("Can't Divide by Zero");
-                }
-            }            
+
+                int result = op(a, b);
+
+                listBox_Stack.Items.RemoveAt(c - 1);
+                listBox_Stack.Items.RemoveAt(c - 2);
+                listBox_Stack.Items.Add(result.ToString());
+            }
         }
 
         private void Inc_Dec_click(object sender, EventArgs e)
@@ -138,6 +106,23 @@ namespace StackCalculator
             {
                 listBox_Stack.Items.Clear();
             }
+        }
+
+        private void btn_Divsion_Click(object sender, EventArgs e)
+        {
+            OperationExecute((a, b) => a / b);
+        }
+        private void btn_Multiplay_Click(object sender, EventArgs e)
+        {
+            OperationExecute((a, b) => a * b);
+        }
+        private void btn_Adding_Click(object sender, EventArgs e)
+        {
+            OperationExecute(Add);
+        }
+        private void btn_Subtract_Click(object sender, EventArgs e)
+        {
+            OperationExecute((a, b) => a - b);
         }
     }
 }
