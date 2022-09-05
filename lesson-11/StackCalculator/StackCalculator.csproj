@@ -46,6 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BetweenFormAndCounter.cs" />
+    <Compile Include="Counter.cs" />
+    <Compile Include="Form_CounterClass.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_CounterClass.Designer.cs">
+      <DependentUpon>Form_CounterClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_lambda.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +68,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form_CounterClass.resx">
+      <DependentUpon>Form_CounterClass.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form_lambda.resx">
       <DependentUpon>Form_lambda.cs</DependentUpon>
     </EmbeddedResource>

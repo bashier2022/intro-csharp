@@ -35,8 +35,8 @@
             this.btn_Push = new System.Windows.Forms.Button();
             this.btn_Clear = new System.Windows.Forms.Button();
             this.btn_del = new System.Windows.Forms.Button();
-            this.btn_Dec = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btn_Decrement = new System.Windows.Forms.Button();
+            this.btn_Increment = new System.Windows.Forms.Button();
             this.btn_0 = new System.Windows.Forms.Button();
             this.btn_Add = new System.Windows.Forms.Button();
             this.btn_Sub = new System.Windows.Forms.Button();
@@ -122,7 +122,7 @@
             this.btn_Clear.TabIndex = 20;
             this.btn_Clear.Text = "Clear";
             this.btn_Clear.UseVisualStyleBackColor = true;
-            this.btn_Clear.Click += new System.EventHandler(this.Delete_Clear_click);
+            this.btn_Clear.Click += new System.EventHandler(this.ClearStack_click);
             // 
             // btn_del
             // 
@@ -134,31 +134,31 @@
             this.btn_del.TabIndex = 19;
             this.btn_del.Text = "Del";
             this.btn_del.UseVisualStyleBackColor = true;
-            this.btn_del.Click += new System.EventHandler(this.Delete_Clear_click);
+            this.btn_del.Click += new System.EventHandler(this.Delete_Number_click);
             // 
-            // btn_Dec
+            // btn_Decrement
             // 
-            this.btn_Dec.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Dec.ForeColor = System.Drawing.Color.Red;
-            this.btn_Dec.Location = new System.Drawing.Point(243, 137);
-            this.btn_Dec.Name = "btn_Dec";
-            this.btn_Dec.Size = new System.Drawing.Size(50, 50);
-            this.btn_Dec.TabIndex = 18;
-            this.btn_Dec.Text = "Dec";
-            this.btn_Dec.UseVisualStyleBackColor = true;
-            this.btn_Dec.Click += new System.EventHandler(this.Inc_Dec_click);
+            this.btn_Decrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Decrement.ForeColor = System.Drawing.Color.Red;
+            this.btn_Decrement.Location = new System.Drawing.Point(243, 137);
+            this.btn_Decrement.Name = "btn_Decrement";
+            this.btn_Decrement.Size = new System.Drawing.Size(50, 50);
+            this.btn_Decrement.TabIndex = 18;
+            this.btn_Decrement.Text = "Dec";
+            this.btn_Decrement.UseVisualStyleBackColor = true;
+            this.btn_Decrement.Click += new System.EventHandler(this.Inc_Dec_click);
             // 
-            // button5
+            // btn_Increment
             // 
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.ForeColor = System.Drawing.Color.Red;
-            this.button5.Location = new System.Drawing.Point(355, 137);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(50, 50);
-            this.button5.TabIndex = 17;
-            this.button5.Text = "Inc";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.Inc_Dec_click);
+            this.btn_Increment.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Increment.ForeColor = System.Drawing.Color.Red;
+            this.btn_Increment.Location = new System.Drawing.Point(355, 137);
+            this.btn_Increment.Name = "btn_Increment";
+            this.btn_Increment.Size = new System.Drawing.Size(50, 50);
+            this.btn_Increment.TabIndex = 17;
+            this.btn_Increment.Text = "Inc";
+            this.btn_Increment.UseVisualStyleBackColor = true;
+            this.btn_Increment.Click += new System.EventHandler(this.Inc_Dec_click);
             // 
             // btn_0
             // 
@@ -340,8 +340,8 @@
             this.Controls.Add(this.btn_Push);
             this.Controls.Add(this.btn_Clear);
             this.Controls.Add(this.btn_del);
-            this.Controls.Add(this.btn_Dec);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.btn_Decrement);
+            this.Controls.Add(this.btn_Increment);
             this.Controls.Add(this.btn_0);
             this.Controls.Add(this.btn_Add);
             this.Controls.Add(this.btn_Sub);
@@ -371,17 +371,17 @@
         private System.Windows.Forms.Button btn_Push;
         private System.Windows.Forms.Button btn_Clear;
         private System.Windows.Forms.Button btn_del;
-        private System.Windows.Forms.Button btn_Dec;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button btn_0;
+        private System.Windows.Forms.Button btn_Decrement;
+        private System.Windows.Forms.Button btn_Increment;
         private System.Windows.Forms.Button btn_Add;
         private System.Windows.Forms.Button btn_Sub;
-        private System.Windows.Forms.Button btn_9;
         private System.Windows.Forms.Button btn_mult;
+        private System.Windows.Forms.Button btn_Div;
+        private System.Windows.Forms.Button btn_0;
+        private System.Windows.Forms.Button btn_9;
         private System.Windows.Forms.Button btn_8;
         private System.Windows.Forms.Button btn_6;
         private System.Windows.Forms.Button btn_5;
-        private System.Windows.Forms.Button btn_Div;
         private System.Windows.Forms.Button btn_7;
         private System.Windows.Forms.Button btn_3;
         private System.Windows.Forms.Button btn_4;

@@ -94,20 +94,14 @@ namespace StackCalculator
             val += add;
             label_DisplayInput.Text = val.ToString();
         }
-        private void Delete_Clear_click(object sender, EventArgs e)
+        private void Delete_Number_click(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
-            string op = btn.Text;
-            if (op == "Del")
-            {
-                label_DisplayInput.Text = "0";
-            }
-            else if (op == "Clear")
-            {
-                listBox_Stack.Items.Clear();
-            }
+            label_DisplayInput.Text = "0";
         }
-
+        private void ClearStack_click(object sender, EventArgs e)
+        {
+            listBox_Stack.Items.Clear();
+        }
         private void btn_Divsion_Click(object sender, EventArgs e)
         {
             OperationExecute((a, b) => a / b);
