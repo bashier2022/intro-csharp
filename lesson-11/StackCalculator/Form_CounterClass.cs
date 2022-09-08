@@ -12,12 +12,12 @@ namespace StackCalculator
 {
     public partial class Form_CounterClass : Form
     {
-        BetweenFormAndCounter counter;
+        private CounterViewAdapter counterAdapter;
         public Form_CounterClass()
         {
             InitializeComponent();
-            counter = new BetweenFormAndCounter();
-            counter.UpDateValue = DisplayCounter;
+            counterAdapter = new CounterViewAdapter();
+            counterAdapter.OnUpdateCallBack = OnValueUpdate;
         }
 
         private void btn_SetValue_Click(object sender, EventArgs e)
@@ -27,24 +27,35 @@ namespace StackCalculator
 
                 if (int.TryParse(textBox_Value.Text, out int c))
                 {
-                    counter.SetValue(c);
+                    counterAdapter.SetValue(c);
                     textBox_Value.Text = "";
                 }
             }
         }
 
-        public void DisplayCounter()
+        public void OnValueUpdate(string text, int current, Color color)
         {
-            label_Counter.Text = counter.Value.ToString();
+            label_Counter.Text = text;
+            label_Counter.ForeColor = color;
         }
         private void btn_Inc_Click(object sender, EventArgs e)
         {
-           counter.Inc();
+           counterAdapter.Inc();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            counter.Dec();
+            counterAdapter.Dec();
+        }
+
+        private void btnAdvance_Click(object sender, EventArgs e)
+        {
+            var s = txtDistance.Text;
+            int n;
+            if(int.TryParse(s, out n))
+            {
+                counterAdapter.Advance(n);
+            }
         }
     }
 }

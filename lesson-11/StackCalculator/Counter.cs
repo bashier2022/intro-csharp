@@ -11,9 +11,10 @@ namespace StackCalculator
         private int counter = 0;
         public void SetValue(int val)
         {
-            this.counter = val;
+            counter = val;
         }
-        public int Value => this.counter;
+        public int Value => counter;
+        
         public void Inc()
         {
             ++counter;
