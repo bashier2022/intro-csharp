@@ -43,10 +43,9 @@ namespace SortedContainers
                 _ascending = save_asc;
                 return left;
             }
-            int mid;
-            while (left < right)
+            int mid = (left + right) / 2;
+            while (left < right) // the condition left <= mid <= right is satisfied
             {
-                mid = (left + right) / 2;
                 if (x > Get(mid))
                 {
                     left = mid + 1;
@@ -60,9 +59,10 @@ namespace SortedContainers
                     _ascending = save_asc;
                     return mid;
                 }
+                mid = (left + right) / 2;
             }
             _ascending = save_asc;
-            return left; // left and right are equals but the mid was not actualized in the last loop by changing left or right
+            return mid; // left and right are and mid are equals
         }
         private void ShiftRight(int position)
         {
