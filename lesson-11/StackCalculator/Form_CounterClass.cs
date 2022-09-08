@@ -17,7 +17,7 @@ namespace StackCalculator
         {
             InitializeComponent();
             counter = new BetweenFormAndCounter();
-            counter.UpDateValue = DisplayCounter;
+            counter.ViewChangedData = DisplayCounter;
         }
 
         private void btn_SetValue_Click(object sender, EventArgs e)

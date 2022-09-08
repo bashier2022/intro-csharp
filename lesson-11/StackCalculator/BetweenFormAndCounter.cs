@@ -6,34 +6,33 @@ using System.Threading.Tasks;
 
 namespace StackCalculator
 {
-    public class BetweenFormAndCounter : Counter
+    public class BetweenFormAndCounter
     {
-        public Action UpDateValue;
-        //public BetweenFormAndCounter() : base()
-        //{
-        //}
+        Counter counter= new Counter();
+        public Action ViewChangedData;
         public void Inc()
         {
-            base.Inc();
-            if (UpDateValue != null)
-            {
-                UpDateValue();
-            }
+            counter.Inc();
+            OnUpDate();
         }
         public void Dec()
         {
-            base.Dec();
-            if (UpDateValue != null)
-            {
-                UpDateValue();
-            }
+            counter.Dec();
+            OnUpDate();
+
+
         }
         public void SetValue(int val)
         {
-            base.SetValue(val);
-            if (UpDateValue != null)
+            counter.SetValue(val);
+            OnUpDate();
+        }
+
+        private void OnUpDate()
+        {
+            if (ViewChangedData != null)
             {
-                UpDateValue();
+                ViewChangedData();
             }
         }
     }
