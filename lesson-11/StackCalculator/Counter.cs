@@ -14,14 +14,7 @@ namespace StackCalculator
             counter = val;
         }
         public int Value => counter;
-        
-        public void Inc()
-        {
-            ++counter;
-        }
-        public void Dec()
-        {
-            --counter;
-        }
+        public void Inc() => ++counter;
+        public void Dec() => --counter;
     }
 }
