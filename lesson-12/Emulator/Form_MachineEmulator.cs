@@ -12,7 +12,9 @@ namespace Emulator
         public Form_MachineEmulator()
         {
             InitializeComponent();
-            _stack = new DataStack(stackViewerPush, stackViewerPop);            
+            _stack = new DataStack(stackViewerPush, stackViewerPop);
+
+            textBox_ProgramCode.Text = DemoPrograms.SimpleWithJumps;
         }
 
         private void BuildCode_Click(object sender, EventArgs e)
@@ -61,7 +63,7 @@ namespace Emulator
                 }
                 
 
-                label_PC.Text = $"PC: {_executor.programCounter}";
+                label_PC.Text = $"PC: {_executor._controller.PC}";
             }
             
         }

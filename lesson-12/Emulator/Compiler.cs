@@ -15,22 +15,22 @@ namespace Emulator
             {               
                 var opCodeText = parts[0].Trim().ToUpper();
 
-                var (opCode, argc) = OpCodeDictionary.Get(opCodeText);
+                var (opCode, argc, lambda) = OpCodeDictionary.Get(opCodeText);
                 if( opCode == OpCodeEnum.PUSH || opCode == OpCodeEnum.JNZ || opCode == OpCodeEnum.JZ)
                 {
                     if(parts.Length > 1 && int.TryParse(parts[1].Trim(), out var operand))
                     {
-                        return new Instruction(opCode, operand, argc);
+                        return new Instruction(opCode, operand, argc, lambda);
                     }
                     else
                     {
                         //TODO: report an error
-                        return new Instruction(opCode, 9999, argc);
+                        return new Instruction(opCode, 9999, argc, lambda);
                     }
                 }
                 else
                 {
-                    return new Instruction(opCode, 0, argc);
+                    return new Instruction(opCode, 0, argc, lambda);
                 }
             }
             else
@@ -47,7 +47,7 @@ namespace Emulator
             string[] sourceLines = source.Split('\n');
             if(sourceLines.Length == 0)
             {
-                instructions.Add(new Instruction(OpCodeEnum.HLT, 0, 0));
+                instructions.Add(decodeLine("HLT"));
                 return instructions;
             }
 
