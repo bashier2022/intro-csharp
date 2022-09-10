@@ -51,8 +51,15 @@ namespace Emulator
             else
             {
                 
-                _executor.ExecuteStep();
-                textBox_ExecutingMessage.Text = "Executing";
+                if (_executor.ExecuteStep())
+                {
+                    textBox_ExecutingMessage.Text = "Executing";
+                }
+                else
+                {
+                    textBox_ExecutingMessage.Text = "Halting on Error";
+                }
+                
 
                 label_PC.Text = $"PC: {_executor.programCounter}";
             }

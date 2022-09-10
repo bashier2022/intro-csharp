@@ -25,21 +25,8 @@ namespace Emulator
 
         private Instruction CurrentInstruction() => _instructions[programCounter];
         
-        private bool HaveEnoughParameters(int n)
-        {
-            if (_instructions.Count > 0)
-            {
-                return true;
-            }
-            else
-            {
-               
-            }
-            programCounter = _instructions.Count;
-            pcUpdated = true;
-            return false;
-
-        }
+        private bool NotEnoughParameters(int n) => n > _stack.Count;
+            
         public bool ExecuteStep()
         {
             if (IsHalted)
@@ -48,6 +35,11 @@ namespace Emulator
             }
 
             var instruction = CurrentInstruction();
+            if (NotEnoughParameters(instruction._argc))
+            {
+                programCounter = _instructions.Count;
+                return false;
+            }
 
             int a, b, c, d;
             pcUpdated = false;
@@ -60,30 +52,25 @@ namespace Emulator
                     _stack.PUSH(a);
                     break;
                 case 2: // DROP
-                    if (HaveEnoughParameters(1))
                     {
                         _stack.POP();
                     }
                     break;
-                case 3: // ADD
-                    if (HaveEnoughParameters(2))
+                case 3: // ADD            
                     {
                         a = _stack.POP();
                         b = _stack.POP();
                         _stack.PUSH(b + a);
                     }
-
                     break;
-                case 4: // SUB
-                    if (HaveEnoughParameters(2))
+                case 4: // SUB                    
                     {
                         a = _stack.POP();
                         b = _stack.POP();
                         _stack.PUSH(b - a);
                     }
                     break;
-                case 5: // MUL
-                    if (HaveEnoughParameters(2))
+                case 5: // MUL                    
                     {
                         a = _stack.POP();
                         b = _stack.POP();
@@ -91,7 +78,6 @@ namespace Emulator
                     }
                     break;
                 case 6: // DIV
-                    if (HaveEnoughParameters(2))
                     {
                         a = _stack.POP();
                         b = _stack.POP();
@@ -105,8 +91,7 @@ namespace Emulator
                         }
                     }
                     break;
-                case 7: // MOD
-                    if (HaveEnoughParameters(2))
+                case 7: // MOD                    
                     {
                         a = _stack.POP();
                         b = _stack.POP();
@@ -120,39 +105,34 @@ namespace Emulator
                         }
                     }
                     break;
-                case 8: // INC
-                    if (HaveEnoughParameters(1))
+                case 8: // INC                    
                     {
                         a = _stack.POP();
                         a++;
                         _stack.PUSH(a);
                     }
                     break;
-                case 9: // DEC
-                    if (HaveEnoughParameters(1))
+                case 9: // DEC                    
                     {
                         a = _stack.POP();
                         a--;
                         _stack.PUSH(a);
                     }
                     break;
-                case 10: // NEG
-                    if (HaveEnoughParameters(1))
+                case 10: // NEG                    
                     {
                         a = _stack.POP();
                         a = -a;
                         _stack.PUSH(a);
                     }
                     break;
-                case 11: //DUP
-                    if (HaveEnoughParameters(1))
+                case 11: //DUP                    
                     {
                         a = _stack.TOP();
                         _stack.PUSH(a);
                     }
                     break;
-                case 12: // CMP
-                    if (HaveEnoughParameters(2))
+                case 12: // CMP                    
                     {
                         a = _stack.POP();
                         b = _stack.POP();
@@ -167,8 +147,7 @@ namespace Emulator
                         _stack.PUSH(0);
                     }
                     break;
-                case 13: // SWAP
-                    if (HaveEnoughParameters(2))
+                case 13: // SWAP                    
                     {
                         a = _stack.POP();
                         b = _stack.POP();
@@ -176,8 +155,7 @@ namespace Emulator
                         _stack.PUSH(b);
                     }
                     break;
-                case 14: // ROL3
-                    if (HaveEnoughParameters(3))
+                case 14: // ROL3                    
                     {
                         a = _stack.POP();
                         b = _stack.POP();
@@ -190,24 +168,22 @@ namespace Emulator
                 case 15: // HLT                                      
                     pcUpdated = true;
                     break;
-                case 16: //JZ
-                    if (HaveEnoughParameters(1))
+                case 16: //JZ                    
                     {
                         a = _stack.POP();
                         if (a == 0)
                         {
-                            programCounter = 0;
+                            programCounter = instruction._operand;
                             pcUpdated = true;
                         }
                     }
                     break;
-                case 17: //JNZ
-                    if (HaveEnoughParameters(1))
+                case 17: //JNZ                    
                     {
                         a = _stack.POP();
                         if (a != 0)
                         {
-                            programCounter = 1;
+                            programCounter = instruction._operand;
                             pcUpdated = true;
                         }
                     }

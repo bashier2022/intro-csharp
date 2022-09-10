@@ -34,5 +34,7 @@ namespace Emulator
         {
             return dataStack.Peek();
         }       
+
+        public int Count => dataStack.Count;
     }
 }

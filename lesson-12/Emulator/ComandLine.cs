@@ -10,11 +10,12 @@ namespace Emulator
     {        
         public OpCodeEnum _opCode;
         public int _operand; //  because what to do if not operand???
-
-        public Instruction(OpCodeEnum opCode, int operand)
-        {            
+        public int _argc;
+        public Instruction(OpCodeEnum opCode, int operand, int argc)
+        {
             _opCode = opCode;
             _operand = operand;
+            _argc = argc;
         }
 
         public override string ToString()
