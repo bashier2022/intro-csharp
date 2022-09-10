@@ -14,7 +14,7 @@ namespace Emulator
             InitializeComponent();
             _stack = new DataStack(stackViewerPush, stackViewerPop);
 
-            textBox_ProgramCode.Text = DemoPrograms.SimpleWithJumps;
+            //textBox_ProgramCode.Text = DemoPrograms.SimpleWithJumps;
         }
 
         private void BuildCode_Click(object sender, EventArgs e)

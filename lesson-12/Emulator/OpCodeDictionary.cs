@@ -28,7 +28,6 @@ namespace Emulator
         JNZ ,
     }
 
-    
     public static class OpCodeDictionary
     {
         private static Dictionary<string, (OpCodeEnum, int, Func<DataStack, Controller, int, bool>)> OpCodeMap = new Dictionary<string, (OpCodeEnum, int, Func<DataStack, Controller, int, bool>)>()
@@ -38,10 +37,10 @@ namespace Emulator
             { "PUSH", (OpCodeEnum.PUSH, 0, (s,c,arg) => { ++c.PC; s.PUSH(arg); return true; } ) },
             { "DROP", (OpCodeEnum.DROP, 0, (s,c,arg) => { ++c.PC; s.POP(); return true; } ) },
             { "ADD",  (OpCodeEnum.ADD , 2, (s,c,arg) => { ++c.PC; s.PUSH(s.POP()+s.POP()); return true; } ) },
-            { "SUB",  (OpCodeEnum.SUB , 2, (s,c,arg) => { ++c.PC; s.PUSH(s.POP()-s.POP()); return true; } ) },
+            { "SUB",  (OpCodeEnum.SUB , 2, (s,c,arg) => { ++c.PC; s.PUSH(-s.POP()+s.POP()); return true; } ) },
             { "MUL",  (OpCodeEnum.MUL , 2, (s,c,arg) => { ++c.PC; s.PUSH(s.POP()*s.POP()); return true; } ) },
-            { "DIV",  (OpCodeEnum.DIV , 2, (s,c,arg) => { ++c.PC; s.PUSH(s.POP()-s.POP()); return true; } ) },
-            { "MOD",  (OpCodeEnum.MOD , 2, (s,c,arg) => { ++c.PC; s.PUSH(s.POP()-s.POP()); return true; } ) },
+            { "DIV",  (OpCodeEnum.DIV , 2, (s,c,arg) => { ++c.PC; s.PUSH(s.POP()/s.POP()); return true; } ) },
+            { "MOD",  (OpCodeEnum.MOD , 2, (s,c,arg) => { ++c.PC; s.PUSH(s.POP()%s.POP()); return true; } ) },
             { "INC",  (OpCodeEnum.INC , 1, (s,c,arg) => { ++c.PC; s.PUSH(s.POP()+1); return true; } ) },
             { "DEC",  (OpCodeEnum.DEC , 1, (s,c,arg) => { ++c.PC; s.PUSH(s.POP()-1); return true; } ) },
             { "NEG",  (OpCodeEnum.NEG , 1, (s,c,arg) => { ++c.PC; s.PUSH(-s.POP()); return true; } ) },
@@ -87,6 +86,7 @@ namespace Emulator
                 return OpCodeMap["NOP"];
             }
         }
+
 
     }
 }
