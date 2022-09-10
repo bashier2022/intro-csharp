@@ -1,53 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Emulator
 {
     public partial class Form_MachineEmulator : Form
-    {
-        Compiler compilation = new Compiler();
-        ProgramExecuter progExec;
-        DataStack ProgStack;
+    {        
+        private ProgramExecuter _executor;        
+
+        private readonly DataStack _stack; 
 
         public Form_MachineEmulator()
         {
-            InitializeComponent();            
-        }
-
-        private void BuildCode()
-        {
-            string sourceCode = textBox_ProgramCode.Text.Trim();
-            string[] progLines = sourceCode.Split('\n');
-
-            int n = progLines.Length;
-            for (int i = 0; i<n; i++)
-            {
-                string line = progLines[i].Trim();
-                ComandLine cl = compilation.DecodeComandLine(i, line);
-                compilation.programList.Add(cl);
-            }
-            ProgStack = new DataStack(stackViewerPush, stackViewerPop);
-            progExec = new ProgramExecuter(compilation.programList, ProgStack);
-            
+            InitializeComponent();
+            _stack = new DataStack(stackViewerPush, stackViewerPop);            
         }
 
         private void BuildCode_Click(object sender, EventArgs e)
-        {
-            compilation = new Compiler();
+        {           
+            var compiler = new Compiler();
+            string sourceCode = textBox_ProgramCode.Text.Trim();
+            var opcodes = compiler.BuildCode(sourceCode);
+
             listBox_ExeCode.Items.Clear();
-            BuildCode();
-            for (int i = 0; i<compilation.programList.Count; i++)
+            int label = 0;
+            foreach (var opcode in opcodes)
             {
-                listBox_ExeCode.Items.Add(compilation.programList[i].ToString());
+                listBox_ExeCode.Items.Add($"{label++}: {opcode.ToString()}");
             }
+
+            _executor = new ProgramExecuter(opcodes, _stack);
+
+            label_PC.Text = "PC: 0";
+            listBox_StackViewer.Items.Clear();
         }
+
         private  void stackViewerPush(int data)
         {
             listBox_StackViewer.Items.Add(data);
@@ -58,28 +44,31 @@ namespace Emulator
         }
         private void ExecuteStep_Click(object sender, EventArgs e)
         {
-            if (!progExec.end)
+            if (_executor.IsHalted)
             {
-                ComandLine cl = progExec.ToBeExecutedStep();
-                progExec.ExecuteStep(cl);
-                textBox_ExecutingMessage.Text = "Executing";
-                
+                textBox_ExecutingMessage.Text = "STOPED";                
             }
             else
             {
-                textBox_ExecutingMessage.Text = "STOPED";
+                
+                _executor.ExecuteStep();
+                textBox_ExecutingMessage.Text = "Executing";
+
+                label_PC.Text = $"PC: {_executor.programCounter}";
             }
-            label_PC.Text = $"PC = {progExec.programCounter.ToString()}";
+            
         }
 
         private void Clear_Click(object sender, EventArgs e)
         {
             textBox_ProgramCode.Clear();
+            listBox_StackViewer.Items.Clear();
+            listBox_ExeCode.Items.Clear();
         }
 
         private void Run_Click(object sender, EventArgs e)
         {
-            while(!progExec.end)
+            while(!_executor.IsHalted)
             {
                 btn_ExecuteStep.PerformClick();
             }

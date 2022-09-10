@@ -6,31 +6,21 @@ using System.Threading.Tasks;
 
 namespace Emulator
 {
-    public class ComandLine
-    {
-        public int comandNumber;
-        public int comandCode;
-        public string value;
+    public class Instruction
+    {        
+        public OpCodeEnum _opCode;
+        public int _operand; //  because what to do if not operand???
 
-        public ComandLine(int comandNumber, int comandCode, string value)
-        {
-            this.comandNumber = comandNumber;
-            this.comandCode = comandCode;
-            this.value = value;
+        public Instruction(OpCodeEnum opCode, int operand)
+        {            
+            _opCode = opCode;
+            _operand = operand;
         }
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(comandNumber.ToString());
-            sb.Append(": ");
-            sb.Append(comandCode.ToString());
-            if (value != "")
-            {
-                sb.Append(" ");
-                sb.Append(value);
-            }            
-            return sb.ToString();
+            var operand = _operand == 0 ? string.Empty : $" {_operand}";
+            return $"{_opCode}{operand}";
         }
     }
 }

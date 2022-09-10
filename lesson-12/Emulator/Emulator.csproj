@@ -55,6 +55,7 @@
     <Compile Include="Form_MachineEmulator.Designer.cs">
       <DependentUpon>Form_MachineEmulator.cs</DependentUpon>
     </Compile>
+    <Compile Include="OpCodeDictionary.cs" />
     <Compile Include="ProgramExecuter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

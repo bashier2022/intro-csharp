@@ -7,56 +7,61 @@ using System.Threading.Tasks;
 namespace Emulator
 {
     public class Compiler
-    {
-        public Dictionary<string, string> CompDict;
-
-        public List<ComandLine> programList = new List<ComandLine>();
-        
-        public Compiler()
+    {                       
+        private Instruction decodeLine(string line)
         {
-            CompDict = new Dictionary<string, string>();
-            AddBasicFunctions();
-        }
+            string[] parts = line.Split(' ');
+            if( parts.Length > 0)
+            {               
+                var opCodeText = parts[0].Trim().ToUpper();
 
-        private void AddBasicFunctions()
-        {
-            CompDict.Add("NOP", "00");
-            CompDict.Add("PUSH", "01");
-            CompDict.Add("DROP", "02");
-            CompDict.Add("ADD", "03");
-            CompDict.Add("SUB", "04");
-            CompDict.Add("MUL", "05");
-            CompDict.Add("DIV", "06");
-            CompDict.Add("MOD", "07");
-            CompDict.Add("INC", "08");
-            CompDict.Add("DEC", "09");
-            CompDict.Add("NEG", "10");
-            CompDict.Add("DUP", "11");
-            CompDict.Add("CMP", "12");
-            CompDict.Add("SWAP", "13");
-            CompDict.Add("ROL3", "14");
-            CompDict.Add("HLT", "15");
-            CompDict.Add("JZ", "16");
-            CompDict.Add("JNZ", "17");
-        }
-
-        public ComandLine DecodeComandLine(int i, string line)
-        {
-            string[] par = line.Split(' ');
-           
-            int comandCode = int.Parse(CompDict[par[0].Trim()]);
-            string value = "";
-            if (par.Length > 1)
-            {
-                value = par[1].Trim();
+                var opCode = OpCodeDictionary.Get(opCodeText);
+                if( opCode == OpCodeEnum.PUSH)
+                {
+                    if(parts.Length > 1 && int.TryParse(parts[1].Trim(), out var operand))
+                    {
+                        return new Instruction(opCode, operand);
+                    }
+                    else
+                    {
+                        //TODO: report an error
+                        return new Instruction(opCode, 9999);
+                    }
+                }
+                else
+                {
+                    return new Instruction(opCode, 0);
+                }
             }
-            return new ComandLine(i, comandCode, value);
+            else
+            {
+                return null;
+            }                      
         }
 
-        public override string ToString()
+        public List<Instruction> BuildCode(string source)
         {
-            StringBuilder sb = new StringBuilder();
-            return base.ToString();
-        }
+            var instructions = new List<Instruction>();
+
+            source = source.Trim();
+            string[] sourceLines = source.Split('\n');
+            if(sourceLines.Length == 0)
+            {
+                instructions.Add(new Instruction(OpCodeEnum.HLT, 0));
+                return instructions;
+            }
+
+            
+            foreach (var line in sourceLines)
+            {
+                var instruction = decodeLine(line);
+                instructions.Add(instruction);
+            }
+
+            return instructions;
+            
+            //ProgStack = new DataStack(stackViewerPush, stackViewerPop);
+            //progExec = new ProgramExecuter(compilation.programList, ProgStack);
+        }        
     }
 }

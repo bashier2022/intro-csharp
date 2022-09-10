@@ -129,7 +129,7 @@
             this.btn_Clear.Name = "btn_Clear";
             this.btn_Clear.Size = new System.Drawing.Size(156, 35);
             this.btn_Clear.TabIndex = 3;
-            this.btn_Clear.Text = "Build";
+            this.btn_Clear.Text = "Clear";
             this.btn_Clear.UseVisualStyleBackColor = true;
             this.btn_Clear.Click += new System.EventHandler(this.Clear_Click);
             // 
@@ -149,7 +149,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(156, 35);
             this.button2.TabIndex = 3;
-            this.button2.Text = "Execute Step";
+            this.button2.Text = "RUN";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.Run_Click);
             // 
