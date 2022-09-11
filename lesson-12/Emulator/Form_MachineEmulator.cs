@@ -15,6 +15,7 @@ namespace Emulator
             _executingComponents._controller = new Controller();
             _executingComponents._dataStack = new DataStack(stackViewerPush, stackViewerPop);
             _executingComponents._ipStack= new DataStack(IPstackViewerPush, IPstackViewerPop);
+            _executingComponents._memory = new Memory(memoryViewer, 256);
 
             //textBox_ProgramCode.Text = DemoPrograms.SimpleWithJumpsIP;
         }
@@ -23,7 +24,7 @@ namespace Emulator
         {           
             var compiler = new Compiler();
             string sourceCode = textBox_ProgramCode.Text.Trim();
-            var opcodes = compiler.BuildCode(sourceCode, dataViewer);
+            var opcodes = compiler.BuildCode(sourceCode);
 
             listBox_ExeCode.Items.Clear();
             int label = 0;
@@ -38,9 +39,9 @@ namespace Emulator
             listBox_StackViewer.Items.Clear();
         }
 
-        private void dataViewer(string str)
+        private void memoryViewer(string memStr)
         {
-            listBox_view.Items.Add(str);
+            textBox_MemoryDisplay.Text = memStr;
         }
         private  void stackViewerPush(int data)
         {

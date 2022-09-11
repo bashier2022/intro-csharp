@@ -29,6 +29,8 @@ namespace Emulator
         HLT,
         JZ,
         JNZ,
+        STORE,
+        LOAD
     }
 
     public class OpCodeDictionary
@@ -61,6 +63,8 @@ namespace Emulator
             OpCodeMap.Add("HLT", (OpCodeEnum.HLT, 0, _Fm.HLT));
             OpCodeMap.Add("JZ", (OpCodeEnum.JZ, 1, _Fm.JZ));
             OpCodeMap.Add("JNZ", (OpCodeEnum.JNZ, 1, _Fm.JNZ));
+            OpCodeMap.Add("STORE", (OpCodeEnum.STORE, 0, _Fm.STORE));
+            OpCodeMap.Add("LOAD", (OpCodeEnum.LOAD, 0, _Fm.LOAD));
         }
         public (OpCodeEnum, int, Func<ExecutingComponents, int, bool>) Get(string name)
         {

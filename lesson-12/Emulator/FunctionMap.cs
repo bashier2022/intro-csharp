@@ -11,20 +11,33 @@ namespace Emulator
         public DataStack _dataStack = new DataStack(null, null);
         public DataStack _ipStack= new DataStack(null, null);
         public Controller _controller = new Controller();
-
+        public Memory _memory;
         public ExecutingComponents() { }
-        public ExecutingComponents(DataStack dataStack, DataStack ipStack, Controller controller) //, int operand)
+        public ExecutingComponents(DataStack dataStack, DataStack ipStack, Controller controller , Memory memory) //, int operand)
         {
             _dataStack = dataStack;
             _ipStack = ipStack;
             _controller = controller;
-        } 
-        
-       
+            _memory = memory;
+        }
     }
     public class FunctionMap
     {
         public FunctionMap() { }
+        public Func<ExecutingComponents, int, bool> LOAD = (exeComp, arg) =>
+        {
+            ++exeComp._controller.PC;
+            int val = exeComp._memory.Load(arg);
+            exeComp._dataStack.PUSH(val);
+            return true;
+        };
+        public Func<ExecutingComponents, int, bool> STORE = (exeComp, arg) =>
+        {
+            ++exeComp._controller.PC;
+            byte val = (byte)exeComp._dataStack.TOP();
+            exeComp._memory.Store(arg, val);
+            return true;
+        };
         public Func<ExecutingComponents, int, bool> PUSHIP = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
@@ -142,7 +155,7 @@ namespace Emulator
         {
             ++exeComp._controller.PC;
             int a = exeComp._dataStack.POP();
-            a--;
+            if (a > 0) a--;
             exeComp._dataStack.PUSH(a);
             return true;
         };

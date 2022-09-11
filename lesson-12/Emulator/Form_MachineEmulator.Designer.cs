@@ -41,7 +41,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label_PC = new System.Windows.Forms.Label();
             this.listBox_IPStackViewer = new System.Windows.Forms.ListBox();
-            this.listBox_view = new System.Windows.Forms.ListBox();
+            this.textBox_MemoryDisplay = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // textBox_ProgramCode
@@ -70,9 +70,9 @@
             this.listBox_StackViewer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.listBox_StackViewer.FormattingEnabled = true;
             this.listBox_StackViewer.ItemHeight = 20;
-            this.listBox_StackViewer.Location = new System.Drawing.Point(463, 58);
+            this.listBox_StackViewer.Location = new System.Drawing.Point(387, 58);
             this.listBox_StackViewer.Name = "listBox_StackViewer";
-            this.listBox_StackViewer.Size = new System.Drawing.Size(159, 524);
+            this.listBox_StackViewer.Size = new System.Drawing.Size(159, 364);
             this.listBox_StackViewer.TabIndex = 2;
             // 
             // listBox_ExeCode
@@ -98,7 +98,7 @@
             // label_DataStack
             // 
             this.label_DataStack.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label_DataStack.Location = new System.Drawing.Point(460, 20);
+            this.label_DataStack.Location = new System.Drawing.Point(384, 20);
             this.label_DataStack.Name = "label_DataStack";
             this.label_DataStack.Size = new System.Drawing.Size(155, 26);
             this.label_DataStack.TabIndex = 1;
@@ -139,7 +139,7 @@
             // 
             this.textBox_ExecutingMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.textBox_ExecutingMessage.ForeColor = System.Drawing.Color.Red;
-            this.textBox_ExecutingMessage.Location = new System.Drawing.Point(684, 483);
+            this.textBox_ExecutingMessage.Location = new System.Drawing.Point(412, 479);
             this.textBox_ExecutingMessage.Name = "textBox_ExecutingMessage";
             this.textBox_ExecutingMessage.Size = new System.Drawing.Size(161, 23);
             this.textBox_ExecutingMessage.TabIndex = 4;
@@ -159,7 +159,7 @@
             // 
             this.label_PC.AutoSize = true;
             this.label_PC.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label_PC.Location = new System.Drawing.Point(655, 101);
+            this.label_PC.Location = new System.Drawing.Point(409, 446);
             this.label_PC.Name = "label_PC";
             this.label_PC.Size = new System.Drawing.Size(23, 13);
             this.label_PC.TabIndex = 5;
@@ -170,25 +170,25 @@
             this.listBox_IPStackViewer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.listBox_IPStackViewer.FormattingEnabled = true;
             this.listBox_IPStackViewer.ItemHeight = 20;
-            this.listBox_IPStackViewer.Location = new System.Drawing.Point(893, 40);
+            this.listBox_IPStackViewer.Location = new System.Drawing.Point(552, 58);
             this.listBox_IPStackViewer.Name = "listBox_IPStackViewer";
-            this.listBox_IPStackViewer.Size = new System.Drawing.Size(159, 524);
+            this.listBox_IPStackViewer.Size = new System.Drawing.Size(159, 364);
             this.listBox_IPStackViewer.TabIndex = 2;
             // 
-            // listBox_view
+            // textBox_MemoryDisplay
             // 
-            this.listBox_view.FormattingEnabled = true;
-            this.listBox_view.Location = new System.Drawing.Point(722, 94);
-            this.listBox_view.Name = "listBox_view";
-            this.listBox_view.Size = new System.Drawing.Size(148, 329);
-            this.listBox_view.TabIndex = 6;
+            this.textBox_MemoryDisplay.Location = new System.Drawing.Point(723, 61);
+            this.textBox_MemoryDisplay.Multiline = true;
+            this.textBox_MemoryDisplay.Name = "textBox_MemoryDisplay";
+            this.textBox_MemoryDisplay.Size = new System.Drawing.Size(510, 525);
+            this.textBox_MemoryDisplay.TabIndex = 6;
             // 
             // Form_MachineEmulator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1139, 617);
-            this.Controls.Add(this.listBox_view);
+            this.ClientSize = new System.Drawing.Size(1283, 617);
+            this.Controls.Add(this.textBox_MemoryDisplay);
             this.Controls.Add(this.label_PC);
             this.Controls.Add(this.textBox_ExecutingMessage);
             this.Controls.Add(this.button2);
@@ -224,7 +224,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label_PC;
         private System.Windows.Forms.ListBox listBox_IPStackViewer;
-        private System.Windows.Forms.ListBox listBox_view;
+        private System.Windows.Forms.TextBox textBox_MemoryDisplay;
     }
 }
 

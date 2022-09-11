@@ -24,7 +24,8 @@ namespace Emulator
         public override string ToString()
         {
             string operand = ""; //_operand == 0 ? string.Empty : $" {_operand}";
-            if (_opCode == OpCodeEnum.PUSH || _opCode == OpCodeEnum.JNZ || _opCode == OpCodeEnum.JZ || _opCode == OpCodeEnum.PUSHIP)
+            if (_opCode == OpCodeEnum.PUSH || _opCode == OpCodeEnum.JNZ || _opCode == OpCodeEnum.JZ ||
+                _opCode == OpCodeEnum.PUSHIP || _opCode == OpCodeEnum.STORE)
             {
                 operand = _operand.ToString();
             }
