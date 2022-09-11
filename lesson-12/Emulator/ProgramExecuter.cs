@@ -20,8 +20,7 @@ namespace Emulator
         public ProgramExecuter(List<Instruction> instructions, ExecutingComponents executionComponents)
         {
             _instructions = instructions;
-            _executionComponents = executionComponents;
-            
+            _executionComponents = executionComponents;            
         }
 
         public bool IsHalted =>    _executionComponents._controller.PC >= _instructions.Count 
@@ -29,8 +28,14 @@ namespace Emulator
 
         private Instruction CurrentInstruction() => _instructions[_executionComponents._controller.PC];
         
-        private bool NotEnoughParameters(DataStack st, int n) => n > st.Count;
-            
+        private bool IsIpPopOperation(Instruction intstruction)
+        {
+            return intstruction._opCode == OpCodeEnum.POPIP || intstruction._opCode == OpCodeEnum.DROPIP;
+        }
+        private bool IsDataPopOperation(Instruction intstruction)
+        {
+            return intstruction._opCode == OpCodeEnum.DROP;
+        }
         public bool ExecuteStep()
         {
             if (IsHalted)
@@ -39,13 +44,21 @@ namespace Emulator
             }
 
             var instruction = CurrentInstruction();
-            if (NotEnoughParameters(_executionComponents._dataStack, instruction._argc))
+            if (IsNotExecutable(instruction))
             {
                 _executionComponents._controller.PC = _instructions.Count;
                 return false;
             }
 
-            return instruction.Execute(_executionComponents, instruction._operand); //(_stack, _controller, _ipStack);                                    
+            return instruction.Execute(_executionComponents, instruction._operand);                                   
+        }
+
+        private bool IsNotExecutable(Instruction instruction)
+        {
+            if (IsIpPopOperation(instruction) && _executionComponents._ipStack.Count == 0) return true;
+            if (IsDataPopOperation(instruction) && _executionComponents._dataStack.Count == 0) return true;
+            if (instruction._argc > _executionComponents._dataStack.Count) return true;
+            return false;
         }
     }
 }

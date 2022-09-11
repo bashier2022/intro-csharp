@@ -6,7 +6,7 @@ namespace Emulator
     public partial class Form_MachineEmulator : Form
     {        
         private ProgramExecuter _executor;        
-        private readonly ExecutingComponents _executingComponents;
+        private ExecutingComponents _executingComponents;
         
         public Form_MachineEmulator()
         {
@@ -87,6 +87,12 @@ namespace Emulator
             textBox_ProgramCode.Clear();
             listBox_StackViewer.Items.Clear();
             listBox_ExeCode.Items.Clear();
+
+            _executingComponents = new ExecutingComponents();
+            _executingComponents._controller = new Controller();
+            _executingComponents._dataStack = new DataStack(stackViewerPush, stackViewerPop);
+            _executingComponents._ipStack= new DataStack(IPstackViewerPush, IPstackViewerPop);
+
         }
 
         private void Run_Click(object sender, EventArgs e)
