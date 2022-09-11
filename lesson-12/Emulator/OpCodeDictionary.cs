@@ -8,75 +8,63 @@ namespace Emulator
 {
     public enum OpCodeEnum
     {
-        NOP , 
+        NOP,
+        PUSHIP,
+        POPIP,
+        DROPIP,
         PUSH,
         DROP,
-        ADD ,
-        SUB ,
-        MUL ,
-        DIV ,
-        MOD ,
-        INC ,
-        DEC ,
-        NEG ,
-        DUP ,
-        CMP ,
+        ADD,
+        SUB,
+        MUL,
+        DIV,
+        MOD,
+        INC,
+        DEC,
+        NEG,
+        DUP,
+        CMP,
         SWAP,
         ROL3,
-        HLT ,
-        JZ  ,
-        JNZ ,
+        HLT,
+        JZ,
+        JNZ,
     }
 
-    public static class OpCodeDictionary
+    public class OpCodeDictionary
     {
-        private static Dictionary<string, (OpCodeEnum, int, Func<DataStack, Controller, int, bool>)> OpCodeMap = new Dictionary<string, (OpCodeEnum, int, Func<DataStack, Controller, int, bool>)>()
+        private Dictionary<string, (OpCodeEnum, int, Func<ExecutingComponents, int, bool>)> OpCodeMap;
+        private FunctionMap _Fm;
+        public OpCodeDictionary(FunctionMap fm)
         {
-            //Name       OpCode        args
-            { "NOP",  (OpCodeEnum.NOP,  0, (s,c,arg) => { ++c.PC;  return true; } ) },
-            { "PUSH", (OpCodeEnum.PUSH, 0, (s,c,arg) => { ++c.PC; s.PUSH(arg); return true; } ) },
-            { "DROP", (OpCodeEnum.DROP, 0, (s,c,arg) => { ++c.PC; s.POP(); return true; } ) },
-            { "ADD",  (OpCodeEnum.ADD , 2, (s,c,arg) => { ++c.PC; s.PUSH(s.POP()+s.POP()); return true; } ) },
-            { "SUB",  (OpCodeEnum.SUB , 2, (s,c,arg) => { ++c.PC; s.PUSH(-s.POP()+s.POP()); return true; } ) },
-            { "MUL",  (OpCodeEnum.MUL , 2, (s,c,arg) => { ++c.PC; s.PUSH(s.POP()*s.POP()); return true; } ) },
-            { "DIV",  (OpCodeEnum.DIV , 2, (s,c,arg) => { ++c.PC; s.PUSH(s.POP()/s.POP()); return true; } ) },
-            { "MOD",  (OpCodeEnum.MOD , 2, (s,c,arg) => { ++c.PC; s.PUSH(s.POP()%s.POP()); return true; } ) },
-            { "INC",  (OpCodeEnum.INC , 1, (s,c,arg) => { ++c.PC; s.PUSH(s.POP()+1); return true; } ) },
-            { "DEC",  (OpCodeEnum.DEC , 1, (s,c,arg) => { ++c.PC; s.PUSH(s.POP()-1); return true; } ) },
-            { "NEG",  (OpCodeEnum.NEG , 1, (s,c,arg) => { ++c.PC; s.PUSH(-s.POP()); return true; } ) },
-            { "DUP",  (OpCodeEnum.DUP , 1, (s,c,arg) => { ++c.PC; s.PUSH(s.TOP()); return true; } ) },
-            { "CMP",  (OpCodeEnum.CMP , 2, (s,c,arg) => { ++c.PC; return true; } ) },
-            { "SWAP", (OpCodeEnum.SWAP, 2, (s,c,arg) => { ++c.PC; var (a, b) = (s.POP(), s.POP()); s.PUSH(a); s.PUSH(b); return true; } ) },
-            { "ROL3", (OpCodeEnum.ROL3, 3, (s,c,arg) => { ++c.PC; return true; } ) },
-            { "HLT",  (OpCodeEnum.HLT , 0, (s,c,arg) => { return false; } ) },
-            { "JZ",   (OpCodeEnum.JZ  , 1, (s,c,arg) => {
-                                                        if( s.POP() == 0)
-                                                        {
-                                                            c.PC =  arg;
-                                                        }
-                                                        else
-                                                        {
-                                                            ++c.PC;
-                                                        }
-                                                        return true;
-                                                    })},
-            { "JNZ",  (OpCodeEnum.JNZ , 1, (s,c,arg) => {
-                                                        if( s.POP() != 0)
-                                                        {
-                                                            c.PC =  arg;
-                                                        }
-                                                        else
-                                                        {
-                                                            ++c.PC;
-                                                        }
-                                                        return true;
-                                                    })},
-
-        };
-
-        public static (OpCodeEnum, int, Func<DataStack, Controller, int, bool>) Get(string name)
+            _Fm = fm;
+            OpCodeMap = new Dictionary<string, (OpCodeEnum, int, Func<ExecutingComponents, int, bool>)>();
+            ////Name       OpCode        args   function
+            OpCodeMap.Add("NOP", (OpCodeEnum.NOP, 0, _Fm.NOP));
+            OpCodeMap.Add("PUSHIP", (OpCodeEnum.PUSHIP, 0, _Fm.PUSHIP));
+            OpCodeMap.Add("POPIP", (OpCodeEnum.POPIP, 0, _Fm.POPIP));
+            OpCodeMap.Add("DROPIP", (OpCodeEnum.DROPIP, 0, _Fm.DROPIP));
+            OpCodeMap.Add("PUSH", (OpCodeEnum.PUSH, 0, _Fm.PUSH));
+            OpCodeMap.Add("DROP", (OpCodeEnum.DROP, 0, _Fm.DROP));
+            OpCodeMap.Add("ADD", (OpCodeEnum.ADD, 2, _Fm.ADD));
+            OpCodeMap.Add("SUB", (OpCodeEnum.SUB, 2, _Fm.SUB));
+            OpCodeMap.Add("MUL", (OpCodeEnum.MUL, 2, _Fm.MUL));
+            OpCodeMap.Add("DIV", (OpCodeEnum.DIV, 2, _Fm.DIV));
+            OpCodeMap.Add("MOD", (OpCodeEnum.MOD, 2, _Fm.MOD));
+            OpCodeMap.Add("INC", (OpCodeEnum.INC, 1, _Fm.INC));
+            OpCodeMap.Add("DEC", (OpCodeEnum.DEC, 1, _Fm.DEC));
+            OpCodeMap.Add("NEG", (OpCodeEnum.NEG, 1, _Fm.NEG));
+            OpCodeMap.Add("DUP", (OpCodeEnum.DUP, 1, _Fm.DUP));
+            OpCodeMap.Add("CMP", (OpCodeEnum.CMP, 2, _Fm.CMP));
+            OpCodeMap.Add("SWAP", (OpCodeEnum.SWAP, 2, _Fm.SWAP));
+            OpCodeMap.Add("ROL3", (OpCodeEnum.ROL3, 3, _Fm.ROL3));
+            OpCodeMap.Add("HLT", (OpCodeEnum.HLT, 0, _Fm.HLT));
+            OpCodeMap.Add("JZ", (OpCodeEnum.JZ, 1, _Fm.JZ));
+            OpCodeMap.Add("JNZ", (OpCodeEnum.JNZ, 1, _Fm.JNZ));
+        }
+        public (OpCodeEnum, int, Func<ExecutingComponents, int, bool>) Get(string name)
         {
-            if(OpCodeMap.TryGetValue(name, out var result))
+            if (OpCodeMap.TryGetValue(name, out var result))
             {
                 return result;
             }
@@ -86,7 +74,5 @@ namespace Emulator
                 return OpCodeMap["NOP"];
             }
         }
-
-
     }
 }

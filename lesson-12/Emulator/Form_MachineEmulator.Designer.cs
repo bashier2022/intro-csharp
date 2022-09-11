@@ -40,6 +40,8 @@
             this.textBox_ExecutingMessage = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.label_PC = new System.Windows.Forms.Label();
+            this.listBox_IPStackViewer = new System.Windows.Forms.ListBox();
+            this.listBox_view = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // textBox_ProgramCode
@@ -163,11 +165,30 @@
             this.label_PC.TabIndex = 5;
             this.label_PC.Text = "PC";
             // 
+            // listBox_IPStackViewer
+            // 
+            this.listBox_IPStackViewer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.listBox_IPStackViewer.FormattingEnabled = true;
+            this.listBox_IPStackViewer.ItemHeight = 20;
+            this.listBox_IPStackViewer.Location = new System.Drawing.Point(893, 40);
+            this.listBox_IPStackViewer.Name = "listBox_IPStackViewer";
+            this.listBox_IPStackViewer.Size = new System.Drawing.Size(159, 524);
+            this.listBox_IPStackViewer.TabIndex = 2;
+            // 
+            // listBox_view
+            // 
+            this.listBox_view.FormattingEnabled = true;
+            this.listBox_view.Location = new System.Drawing.Point(722, 94);
+            this.listBox_view.Name = "listBox_view";
+            this.listBox_view.Size = new System.Drawing.Size(148, 329);
+            this.listBox_view.TabIndex = 6;
+            // 
             // Form_MachineEmulator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1139, 617);
+            this.Controls.Add(this.listBox_view);
             this.Controls.Add(this.label_PC);
             this.Controls.Add(this.textBox_ExecutingMessage);
             this.Controls.Add(this.button2);
@@ -175,6 +196,7 @@
             this.Controls.Add(this.btn_Clear);
             this.Controls.Add(this.btn_Build);
             this.Controls.Add(this.listBox_ExeCode);
+            this.Controls.Add(this.listBox_IPStackViewer);
             this.Controls.Add(this.listBox_StackViewer);
             this.Controls.Add(this.label_DataStack);
             this.Controls.Add(this.label_ExeCode);
@@ -201,6 +223,8 @@
         private System.Windows.Forms.TextBox textBox_ExecutingMessage;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label_PC;
+        private System.Windows.Forms.ListBox listBox_IPStackViewer;
+        private System.Windows.Forms.ListBox listBox_view;
     }
 }
 

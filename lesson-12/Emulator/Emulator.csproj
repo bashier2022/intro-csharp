@@ -50,6 +50,7 @@
     <Compile Include="Compiler.cs" />
     <Compile Include="DataStack.cs" />
     <Compile Include="DemoPrograms.cs" />
+    <Compile Include="dummy.cs" />
     <Compile Include="Form_MachineEmulator.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -22,5 +22,16 @@ JZ 1
 NOP
 HLT";
 
+        public static readonly string SimpleWithJumpsIP
+= @"push 0
+dup
+inc
+puship 1
+dup
+push 10
+sub
+jz 9
+popip
+hlt";
     }
 }

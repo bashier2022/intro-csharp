@@ -13,23 +13,23 @@ namespace Emulator
 
     public class ProgramExecuter
     {
-        public Controller _controller = new Controller();
-              
         
+        private ExecutingComponents _executionComponents;
         private List<Instruction> _instructions;
-        private DataStack _stack;
-        public ProgramExecuter(List<Instruction> instructions, DataStack stack)
+        
+        public ProgramExecuter(List<Instruction> instructions, ExecutingComponents executionComponents)
         {
             _instructions = instructions;
-            _stack = stack;
+            _executionComponents = executionComponents;
+            
         }
 
-        public bool IsHalted =>    _controller.PC >= _instructions.Count 
+        public bool IsHalted =>    _executionComponents._controller.PC >= _instructions.Count 
                                 || CurrentInstruction()._opCode == OpCodeEnum.HLT;
 
-        private Instruction CurrentInstruction() => _instructions[_controller.PC];
+        private Instruction CurrentInstruction() => _instructions[_executionComponents._controller.PC];
         
-        private bool NotEnoughParameters(int n) => n > _stack.Count;
+        private bool NotEnoughParameters(DataStack st, int n) => n > st.Count;
             
         public bool ExecuteStep()
         {
@@ -39,13 +39,13 @@ namespace Emulator
             }
 
             var instruction = CurrentInstruction();
-            if (NotEnoughParameters(instruction._argc))
+            if (NotEnoughParameters(_executionComponents._dataStack, instruction._argc))
             {
-                _controller.PC = _instructions.Count;
+                _executionComponents._controller.PC = _instructions.Count;
                 return false;
             }
 
-            return instruction.Execute(_stack, _controller);                                    
+            return instruction.Execute(_executionComponents, instruction._operand); //(_stack, _controller, _ipStack);                                    
         }
     }
 }

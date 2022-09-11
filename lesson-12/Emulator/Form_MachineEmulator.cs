@@ -6,22 +6,24 @@ namespace Emulator
     public partial class Form_MachineEmulator : Form
     {        
         private ProgramExecuter _executor;        
-
-        private readonly DataStack _stack; 
-
+        private readonly ExecutingComponents _executingComponents;
+        
         public Form_MachineEmulator()
         {
             InitializeComponent();
-            _stack = new DataStack(stackViewerPush, stackViewerPop);
+            _executingComponents = new ExecutingComponents();
+            _executingComponents._controller = new Controller();
+            _executingComponents._dataStack = new DataStack(stackViewerPush, stackViewerPop);
+            _executingComponents._ipStack= new DataStack(IPstackViewerPush, IPstackViewerPop);
 
-            //textBox_ProgramCode.Text = DemoPrograms.SimpleWithJumps;
+            //textBox_ProgramCode.Text = DemoPrograms.SimpleWithJumpsIP;
         }
 
         private void BuildCode_Click(object sender, EventArgs e)
         {           
             var compiler = new Compiler();
             string sourceCode = textBox_ProgramCode.Text.Trim();
-            var opcodes = compiler.BuildCode(sourceCode);
+            var opcodes = compiler.BuildCode(sourceCode, dataViewer);
 
             listBox_ExeCode.Items.Clear();
             int label = 0;
@@ -30,12 +32,16 @@ namespace Emulator
                 listBox_ExeCode.Items.Add($"{label++}: {opcode.ToString()}");
             }
 
-            _executor = new ProgramExecuter(opcodes, _stack);
+            _executor = new ProgramExecuter(opcodes, _executingComponents);
 
             label_PC.Text = "PC: 0";
             listBox_StackViewer.Items.Clear();
         }
 
+        private void dataViewer(string str)
+        {
+            listBox_view.Items.Add(str);
+        }
         private  void stackViewerPush(int data)
         {
             listBox_StackViewer.Items.Add(data);
@@ -43,6 +49,14 @@ namespace Emulator
         private  void stackViewerPop()
         {
             listBox_StackViewer.Items.RemoveAt(listBox_StackViewer.Items.Count - 1);
+        }
+        private void IPstackViewerPush(int data)
+        {
+            listBox_IPStackViewer.Items.Add(data);
+        }
+        private void IPstackViewerPop()
+        {
+            listBox_IPStackViewer.Items.RemoveAt(listBox_IPStackViewer.Items.Count - 1);
         }
         private void ExecuteStep_Click(object sender, EventArgs e)
         {
@@ -63,7 +77,7 @@ namespace Emulator
                 }
                 
 
-                label_PC.Text = $"PC: {_executor._controller.PC}";
+                label_PC.Text = $"PC: {_executingComponents._controller.PC}";
             }
             
         }

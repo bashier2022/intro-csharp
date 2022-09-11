@@ -8,70 +8,58 @@ namespace Emulator
 {
     public class ExecutingComponents
     {
-        public DataStack _dataStack;
-        public DataStack _ipStack;
-        public Controller _controller;
-        public int _operand;
+        public DataStack _dataStack = new DataStack(null, null);
+        public DataStack _ipStack= new DataStack(null, null);
+        public Controller _controller = new Controller();
 
-        public ExecutingComponents(DataStack dataStack, DataStack ipStack, Controller controller, int operand)
+        public ExecutingComponents() { }
+        public ExecutingComponents(DataStack dataStack, DataStack ipStack, Controller controller) //, int operand)
         {
             _dataStack = dataStack;
             _ipStack = ipStack;
             _controller = controller;
-            _operand = operand;
         } 
         
        
     }
     public class FunctionMap
     {
-        private OpCodeEnum _opCode;
-        private int _arity;
-        private Func<ExecutingComponents, bool> _exeCodeFunction;
-
-        public OpCodeEnum opCode => _opCode;
-        public FunctionMap(OpCodeEnum opCode,int arity, Func<ExecutingComponents, bool> exeCodeFunction)
-        {
-            _opCode = opCode;
-            _arity = arity;
-            _exeCodeFunction = exeCodeFunction;
-        }
-
-        Func<ExecutingComponents, bool> PUSHIP = (exeComp) =>
+        public FunctionMap() { }
+        public Func<ExecutingComponents, int, bool> PUSHIP = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
-            exeComp._ipStack.PUSH(exeComp._operand);
+            exeComp._ipStack.PUSH(arg);
             return true;
         };
-        Func<ExecutingComponents, bool> DROPIP = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> DROPIP = (exeComp, arg) =>
         {
             exeComp._controller.PC = exeComp._ipStack.POP();
             return true;
         };
-        Func<ExecutingComponents, bool> POPIP = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> POPIP = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             exeComp._ipStack.POP();
             return true;
         };
-        Func<ExecutingComponents, bool> NOP = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> NOP = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             return true;
         };
-        Func<ExecutingComponents, bool> PUSH = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> PUSH = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;            
-            exeComp._dataStack.PUSH(exeComp._operand);
+            exeComp._dataStack.PUSH(arg);
             return true;
         };
-        Func<ExecutingComponents, bool> DROP = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> DROP = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             exeComp._dataStack.POP();
             return true;
         };
-        Func<ExecutingComponents, bool> ROL3 = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> ROL3 = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             int a = exeComp._dataStack.POP();
@@ -82,7 +70,7 @@ namespace Emulator
             exeComp._dataStack.PUSH(a);
             return true;
         };
-        Func<ExecutingComponents, bool> ADD = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> ADD = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             int a = exeComp._dataStack.POP();
@@ -90,7 +78,7 @@ namespace Emulator
             exeComp._dataStack.PUSH(b+a);
             return true;
         };
-        Func<ExecutingComponents, bool> SUB = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> SUB = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             int a = exeComp._dataStack.POP();
@@ -98,7 +86,7 @@ namespace Emulator
             exeComp._dataStack.PUSH(b - a);
             return true;
         };
-        Func<ExecutingComponents, bool> MUL = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> MUL = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             int a = exeComp._dataStack.POP();
@@ -106,7 +94,7 @@ namespace Emulator
             exeComp._dataStack.PUSH(b * a);
             return true;
         };
-        Func<ExecutingComponents, bool> DIV = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> DIV = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             int a = exeComp._dataStack.POP();
@@ -114,7 +102,7 @@ namespace Emulator
             exeComp._dataStack.PUSH(b / a);
             return true;
         };
-        Func<ExecutingComponents, bool> MOD = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> MOD = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             int a = exeComp._dataStack.POP();
@@ -122,7 +110,7 @@ namespace Emulator
             exeComp._dataStack.PUSH(b % a);
             return true;
         };
-        Func<ExecutingComponents, bool> CMP = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> CMP = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             int a = exeComp._dataStack.POP();
@@ -133,7 +121,7 @@ namespace Emulator
             else { exeComp._dataStack.PUSH(0); }
             return true;
         };
-        Func<ExecutingComponents, bool> SWAP = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> SWAP = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             int a = exeComp._dataStack.POP();
@@ -142,7 +130,7 @@ namespace Emulator
             exeComp._dataStack.PUSH(b);
             return true;
         };
-        Func<ExecutingComponents, bool> INC= (exeComp) =>
+        public Func<ExecutingComponents, int, bool> INC= (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             int a = exeComp._dataStack.POP();
@@ -150,7 +138,7 @@ namespace Emulator
             exeComp._dataStack.PUSH(a);
             return true;
         };
-        Func<ExecutingComponents, bool> DEC = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> DEC = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             int a = exeComp._dataStack.POP();
@@ -158,38 +146,42 @@ namespace Emulator
             exeComp._dataStack.PUSH(a);
             return true;
         };
-        Func<ExecutingComponents, bool> NEG = (exeComp) =>
-        {
+        public Func<ExecutingComponents, int, bool> NEG = (exeComp, arg) =>
+        { 
             ++exeComp._controller.PC;
             int a = exeComp._dataStack.POP();
             a = -a;
             exeComp._dataStack.PUSH(a);
             return true;
         };
-        Func<ExecutingComponents, bool> DUP = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> DUP = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             int a = exeComp._dataStack.TOP();
             exeComp._dataStack.PUSH(a);
             return true;
         };
-        Func<ExecutingComponents, bool> JZ = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> HLT = (exeComp, arg) =>
+        {
+            return false;
+        };
+        public Func<ExecutingComponents, int, bool> JZ = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             int a = exeComp._dataStack.POP();
             if (a == 0)
             {
-                exeComp._controller.PC = exeComp._operand;
+                exeComp._controller.PC = arg;
             }
             return true;
         };
-        Func<ExecutingComponents, bool> JNZ = (exeComp) =>
+        public Func<ExecutingComponents, int, bool> JNZ = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             int a = exeComp._dataStack.POP();
             if (a != 0)
             {
-                exeComp._controller.PC = exeComp._operand;
+                exeComp._controller.PC = arg;
             }
             return true;
         };
