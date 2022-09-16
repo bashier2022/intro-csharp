@@ -149,7 +149,7 @@ namespace Emulator
             {
                 for (int x = 0; x < _dataX; x++)
                 {
-                    AddByteImage(y, x, new MemoryByte(5));
+                    AddByteImage(y, x, new MemoryByte(0));
                 }
             }            
         }

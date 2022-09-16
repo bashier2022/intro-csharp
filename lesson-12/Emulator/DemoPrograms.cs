@@ -45,5 +45,18 @@ SUB
 JZ 10
 Dropip
 HLT";
+
+        public static readonly string SimpleWithJumpsIPstore
+=@"push 0
+store 2
+dup
+inc
+puship 1
+dup
+push 10
+sub
+jz 10
+dropip
+hlt";
     }
 }

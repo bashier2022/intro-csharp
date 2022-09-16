@@ -23,7 +23,7 @@ namespace Emulator
         {
             InitializeComponent();
  
-            textBox_ProgramCode.Text = DemoPrograms.SimpleWithJumpsIP;
+            textBox_ProgramCode.Text = DemoPrograms.SimpleWithJumpsIPstore;
         }
 
         private void BuildCode_Click(object sender, EventArgs e)
