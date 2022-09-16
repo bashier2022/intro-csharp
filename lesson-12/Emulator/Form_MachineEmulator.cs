@@ -95,6 +95,7 @@ namespace Emulator
             _executingComponents._controller = new Controller();
             _executingComponents._dataStack = new DataStack(stackViewerPush, stackViewerPop);
             _executingComponents._ipStack= new DataStack(IPstackViewerPush, IPstackViewerPop);
+            _executingComponents._memory = new Memory(memoryViewer, 32);
 
         }
 
