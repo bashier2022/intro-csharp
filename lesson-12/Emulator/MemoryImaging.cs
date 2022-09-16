@@ -151,15 +151,7 @@ namespace Emulator
                 {
                     AddByteImage(y, x, new MemoryByte(5));
                 }
-            }
-            //AddByteImage(0, 0, new MemoryByte(13));
-            //AddByteImage(0, 1, new MemoryByte(44));
-            //AddByteImage(1, 0, new MemoryByte(177));
-            //AddByteImage(1, 1, new MemoryByte(89));
-            //AddByteImage(2, 0, new MemoryByte(13));
-            //AddByteImage(2, 1, new MemoryByte(44));
-            //AddByteImage(3, 0, new MemoryByte(177));
-            //AddByteImage(3, 1, new MemoryByte(89));
+            }            
         }
 
         private void AddByteImage(int i, int j, MemoryByte memoryByte)
@@ -172,7 +164,6 @@ namespace Emulator
             for (int y = 0; y<h; y++)
                 for (int x = 0; x < w; x++)
                     _bitMap.SetPixel(dx + x, dy + y, memoryByte.Image.GetPixel(x, y));
-
         }
 
         public Bitmap Image => _bitMap;

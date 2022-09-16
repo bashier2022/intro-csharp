@@ -8,9 +8,9 @@ namespace Emulator
 {
     public class ExecutingComponents
     {
-        public DataStack _dataStack = new DataStack(null, null);
-        public DataStack _ipStack= new DataStack(null, null);
-        public Controller _controller = new Controller();
+        public DataStack _dataStack;
+        public DataStack _ipStack;
+        public Controller _controller;
         public Memory _memory;
         public ExecutingComponents() { }
         public ExecutingComponents(DataStack dataStack, DataStack ipStack, Controller controller , Memory memory) //, int operand)

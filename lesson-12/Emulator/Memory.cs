@@ -43,7 +43,7 @@ namespace Emulator
             if (_height * _len < address) return 0;
             int r = address / _len;
             int c = address % _len;
-            return _memory[r, c-1];
+            return _memory[r, c];
         }
 
         public override string ToString()

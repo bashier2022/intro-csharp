@@ -2,23 +2,28 @@
 using System.Windows.Forms;
 using System.Drawing;
 
+
 namespace Emulator
 {
+    //public class Viewers
+    //{
+    //    public Action<int> viewProgStackPush;
+    //    public Action viewProgStackPop;
+    //    public Action<int> viewIpStackPush;
+    //    public Action viewIpStackPop;
+    //    public Action<string, Bitmap> viewMemoryData;
+    //    public Action<int> viewPc;
+    //}
     public partial class Form_MachineEmulator : Form
-    {        
+    {   
+        
         private ProgramExecuter _executor;        
-        private ExecutingComponents _executingComponents;
         
         public Form_MachineEmulator()
         {
             InitializeComponent();
-            _executingComponents = new ExecutingComponents();
-            _executingComponents._controller = new Controller();
-            _executingComponents._dataStack = new DataStack(stackViewerPush, stackViewerPop);
-            _executingComponents._ipStack= new DataStack(IPstackViewerPush, IPstackViewerPop);
-            _executingComponents._memory = new Memory(memoryViewer, 32);
-
-            //textBox_ProgramCode.Text = DemoPrograms.SimpleWithJumpsIP;
+ 
+            textBox_ProgramCode.Text = DemoPrograms.SimpleWithJumpsIP;
         }
 
         private void BuildCode_Click(object sender, EventArgs e)
@@ -33,8 +38,15 @@ namespace Emulator
             {
                 listBox_ExeCode.Items.Add($"{label++}: {opcode.ToString()}");
             }
-
-            _executor = new ProgramExecuter(opcodes, _executingComponents);
+            Viewers viewers = new Viewers();
+            viewers.viewProgStackPush = stackViewerPush;
+            viewers.viewProgStackPop = stackViewerPop;
+            viewers.viewIpStackPush = IPstackViewerPush;
+            viewers.viewIpStackPop = IPstackViewerPop;
+            viewers.viewMemoryData = memoryViewer;
+            viewers.viewPc = PcViewer;
+            viewers.viewProcessMessage = ProcessMessageViewer;
+            _executor = new ProgramExecuter(opcodes, viewers);
 
             label_PC.Text = "PC: 0";
             listBox_StackViewer.Items.Clear();
@@ -51,7 +63,10 @@ namespace Emulator
         }
         private  void stackViewerPop()
         {
-            listBox_StackViewer.Items.RemoveAt(listBox_StackViewer.Items.Count - 1);
+            if (listBox_StackViewer.Items.Count > 0)
+            {
+                listBox_StackViewer.Items.RemoveAt(listBox_StackViewer.Items.Count - 1);
+            }
         }
         private void IPstackViewerPush(int data)
         {
@@ -59,53 +74,50 @@ namespace Emulator
         }
         private void IPstackViewerPop()
         {
-            listBox_IPStackViewer.Items.RemoveAt(listBox_IPStackViewer.Items.Count - 1);
+            if (listBox_IPStackViewer.Items.Count>0)
+            {
+                listBox_IPStackViewer.Items.RemoveAt(listBox_IPStackViewer.Items.Count - 1);
+            }
+        }
+        private void PcViewer(int data)
+        {
+            label_PC.Text =  $"PC: {data}";
+        }
+        private void ProcessMessageViewer(string message)
+        {
+            textBox_ExecutingMessage.Text = message;
         }
         private void ExecuteStep_Click(object sender, EventArgs e)
         {
-            if (_executor.IsHalted)
-            {
-                textBox_ExecutingMessage.Text = "STOPED";                
-            }
-            else
-            {
-                
-                if (_executor.ExecuteStep())
-                {
-                    textBox_ExecutingMessage.Text = "Executing";
-                }
-                else
-                {
-                    textBox_ExecutingMessage.Text = "Halting on Error";
-                }
-                
-
-                label_PC.Text = $"PC: {_executingComponents._controller.PC}";
-            }
-            
+            _executor.ExecuteStep();
         }
 
         private void Clear_Click(object sender, EventArgs e)
         {
-            textBox_ProgramCode.Clear();
-            listBox_StackViewer.Items.Clear();
+            //textBox_ProgramCode.Clear();
             listBox_ExeCode.Items.Clear();
+            _executor.Reset();
 
-            _executingComponents = new ExecutingComponents();
-            _executingComponents._controller = new Controller();
-            _executingComponents._dataStack = new DataStack(stackViewerPush, stackViewerPop);
-            _executingComponents._ipStack= new DataStack(IPstackViewerPush, IPstackViewerPop);
-            _executingComponents._memory = new Memory(memoryViewer, 32);
 
         }
 
         private void Run_Click(object sender, EventArgs e)
         {
-            while(!_executor.IsHalted)
-            {
-                btn_ExecuteStep.PerformClick();
-            }
-            textBox_ExecutingMessage.Text = "STOPED";
+            while (_executor.ExecuteStep()) { }
+            //while(!_executor.IsHalted)
+            //{
+            //    btn_ExecuteStep.PerformClick();
+            //}
         }
+    }
+    public class Viewers
+    {
+        public Action<int> viewProgStackPush;
+        public Action viewProgStackPop;
+        public Action<int> viewIpStackPush;
+        public Action viewIpStackPop;
+        public Action<string, Bitmap> viewMemoryData;
+        public Action<int> viewPc;
+        public Action<string> viewProcessMessage;
     }
 }

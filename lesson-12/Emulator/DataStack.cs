@@ -34,7 +34,14 @@ namespace Emulator
         {
             return dataStack.Peek();
         }       
-
+        public bool EMPTY()
+        {
+            return dataStack.Count == 0;
+        }
+        public void CLEAR()
+        {
+            while(!EMPTY()) POP();
+        }
         public int Count => dataStack.Count;
     }
 }

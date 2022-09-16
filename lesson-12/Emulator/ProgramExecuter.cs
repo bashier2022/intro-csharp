@@ -8,7 +8,35 @@ namespace Emulator
 {
     public class Controller
     {
-        public int PC { get; set; } = 0;
+        private int _pc = 0;
+        private Action<int> _viewPc;
+        public Controller(Action<int> viewPc)
+        {
+            if (viewPc != null)
+            {
+                _viewPc = viewPc;
+            }
+        }
+        private void OnChange()
+        {
+            _viewPc(PC);
+        }
+        public void Reset()
+        {
+            PC = 0;
+        }
+        public int PC
+        {
+            get
+            {
+                return _pc;
+            }
+            set
+            {
+                _pc = value;
+                OnChange();
+            }
+        }
     }
 
     public class ProgramExecuter
@@ -16,11 +44,23 @@ namespace Emulator
         
         private ExecutingComponents _executionComponents;
         private List<Instruction> _instructions;
-        
-        public ProgramExecuter(List<Instruction> instructions, ExecutingComponents executionComponents)
+
+        private Viewers _view;
+        public ProgramExecuter(List<Instruction> instructions, Viewers viewers)
         {
             _instructions = instructions;
-            _executionComponents = executionComponents;            
+            _view = viewers;
+            SetParameters();
+        }
+
+        private void SetParameters()
+        {
+            _executionComponents = new ExecutingComponents();
+            _executionComponents._controller = new Controller(_view.viewPc);
+            _executionComponents._dataStack = new DataStack(_view.viewProgStackPush, _view.viewProgStackPop);
+            _executionComponents._ipStack= new DataStack(_view.viewIpStackPush, _view.viewIpStackPop);
+            _executionComponents._memory = new Memory(_view.viewMemoryData, 32);
+
         }
 
         public bool IsHalted =>    _executionComponents._controller.PC >= _instructions.Count 
@@ -40,6 +80,7 @@ namespace Emulator
         {
             if (IsHalted)
             {
+                _view.viewProcessMessage("Halted");
                 return false;
             }
 
@@ -47,9 +88,10 @@ namespace Emulator
             if (IsNotExecutable(instruction))
             {
                 _executionComponents._controller.PC = _instructions.Count;
+                _view.viewProcessMessage("Error: NOT Executable Instruction");
                 return false;
             }
-
+            _view.viewProcessMessage("Proceeding Execution");
             return instruction.Execute(_executionComponents, instruction._operand);                                   
         }
 
@@ -59,6 +101,14 @@ namespace Emulator
             if (IsDataPopOperation(instruction) && _executionComponents._dataStack.Count == 0) return true;
             if (instruction._argc > _executionComponents._dataStack.Count) return true;
             return false;
+        }
+
+        internal void Reset()
+        {
+            _executionComponents._controller.Reset();
+            _executionComponents._dataStack.CLEAR();
+            _executionComponents._ipStack.CLEAR();
+            _executionComponents._memory = new Memory(_view.viewMemoryData, 32);
         }
     }
 }
