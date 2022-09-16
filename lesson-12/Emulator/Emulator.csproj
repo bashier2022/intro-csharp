@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="FunctionMap.cs" />
     <Compile Include="Memory.cs" />
+    <Compile Include="MemoryImaging.cs" />
     <Compile Include="OpCodeDictionary.cs" />
     <Compile Include="ProgramExecuter.cs" />
     <Compile Include="Program.cs" />

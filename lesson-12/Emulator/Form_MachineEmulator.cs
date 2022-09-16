@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Emulator
 {
@@ -15,7 +16,7 @@ namespace Emulator
             _executingComponents._controller = new Controller();
             _executingComponents._dataStack = new DataStack(stackViewerPush, stackViewerPop);
             _executingComponents._ipStack= new DataStack(IPstackViewerPush, IPstackViewerPop);
-            _executingComponents._memory = new Memory(memoryViewer, 256);
+            _executingComponents._memory = new Memory(memoryViewer, 32);
 
             //textBox_ProgramCode.Text = DemoPrograms.SimpleWithJumpsIP;
         }
@@ -39,9 +40,10 @@ namespace Emulator
             listBox_StackViewer.Items.Clear();
         }
 
-        private void memoryViewer(string memStr)
+        private void memoryViewer(string memStr , Bitmap memImage)
         {
             textBox_MemoryDisplay.Text = memStr;
+            pictureBox_MemoryImage.Image = memImage;
         }
         private  void stackViewerPush(int data)
         {
