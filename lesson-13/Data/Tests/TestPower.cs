@@ -15,8 +15,8 @@ namespace Tests
         [Test]
         public void TestPow()
         {
-            int[] a = { 2, 7, 0, -1, 7, -5, -2, 4, 0 };
-            int[] b = { 3, 0, 5, 2, -1,  2, -4, 2, 0 };
+            int[] a = { 2, 7, 0, -1, 7, -5, -2, 4, 0, -2 };
+            int[] b = { 3, 0, 5, 2, -1,  2, -4, 2, 0, 3 };
             double r;
             for (int i = 0; i< a.Length; i++)
             {
