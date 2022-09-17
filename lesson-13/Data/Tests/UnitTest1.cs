@@ -2,67 +2,47 @@ namespace Tests
 {
     public class Tests
     {
+        Data.Algebra alg; 
         [SetUp]
         public void Setup()
         {
+             alg = new Data.Algebra();
+            Console.WriteLine("OK");
         }
 
         [Test]
         public void TestAdd()
-        {
-            Data.Algebra alg = new Data.Algebra();
+        {            
             var r = alg.Add(5, 6);
             Assert.AreEqual(r, 5+6);
         }
         [Test]
         public void TestMultPostives()
         {
-            int a, b , r;
-            Data.Algebra alg = new Data.Algebra();
-            (a, b)=(0, 0);
-            r = alg.Mult(a, b);
-            Assert.IsTrue(r == a*b);
-
-            (a, b)=(0, 5);
-            r = alg.Mult(a, b);
-            Assert.IsTrue(r == a*b);
-
-            (a, b)=(7, 0);
-            r = alg.Mult(a, b);
-            Assert.IsTrue(r == a*b);
-
-            (a, b)=(7, 5);
-            r = alg.Mult(a, b);
-            Assert.IsTrue(r == a*b);
+            int[] a = { 0, 7, 7, 1, 7, 1 };
+            int[] b = { 5, 0, 5, 5, 1, 1 };
+            int r;
+            for (int i = 0; i< a.Length; i++)
+            {
+                r = alg.Mult(a[i], b[i]);
+                Assert.AreEqual(r, a[i]*b[i]);
+                Console.WriteLine($"{a[i]} * {b[i]} = {r}");
+            }
 
         }
 
         [Test]
         public void TestMultNegatives()
         {
-            int a, b, r;
-            Data.Algebra alg = new Data.Algebra();
+            int[] a = { 0, -7, 7, -7, -7, -1 };
+            int[] b = { -5, 0, -5, 5, -5, -1 };
+            int r;
+            for(int i = 0; i< a.Length; i++)
+            {
+                r = alg.Mult(a[i], b[i]);
+                Assert.AreEqual(r , a[i]*b[i]);
+            }
             
-            (a, b)=(0, -5);
-            r = alg.Mult(a, b);
-            Assert.IsTrue(r == a*b);
-
-            (a, b)=(-7, 0);
-            r = alg.Mult(a, b);
-            Assert.IsTrue(r == a*b);
-
-            (a, b)=(7, -5);
-            r = alg.Mult(a, b);
-            Assert.IsTrue(r == a*b);
-
-            (a, b)=(-7, 5);
-            r = alg.Mult(a, b);
-            Assert.IsTrue(r == a*b);
-
-            (a, b)=(-7, -5);
-            r = alg.Mult(a, b);
-            Assert.IsTrue(r == a*b);
-
         }
     }
 }
