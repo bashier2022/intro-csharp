@@ -178,7 +178,12 @@ namespace Emulator
         {
             return false;
         };
-        public Func<ExecutingComponents, int, bool> JZ = (exeComp, arg) =>
+        public Func<ExecutingComponents, int, bool> JMP = (exeComp, arg) =>
+        {
+            exeComp._controller.PC = arg;
+            return true;
+        };
+public Func<ExecutingComponents, int, bool> JZ = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
             int a = exeComp._dataStack.POP();
@@ -199,6 +204,7 @@ namespace Emulator
             return true;
         };
 
+       
     }
 
    

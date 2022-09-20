@@ -1,0 +1,19 @@
+push 10
+store 6
+drop
+push 0
+store 0
+push 1
+store 1
+add
+store 2
+load 6
+dec
+store 6
+jz 1000
+drop
+load 1
+store 0
+load 2
+store 1
+jmp 7

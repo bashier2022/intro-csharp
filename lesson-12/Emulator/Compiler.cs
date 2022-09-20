@@ -20,7 +20,7 @@ namespace Emulator
                 //Func<ExecutingComponents, int, bool> exeFunf;
                 var  (opCode, argc, exeFunf) = opCodeDict.Get(opCodeText);
                 if( opCode == OpCodeEnum.PUSH || opCode == OpCodeEnum.JNZ || opCode == OpCodeEnum.JZ || 
-                    opCode == OpCodeEnum.PUSHIP || opCode== OpCodeEnum.STORE)
+                    opCode == OpCodeEnum.PUSHIP || opCode== OpCodeEnum.STORE || opCode== OpCodeEnum.LOAD)
                 {
                     if(parts.Length > 1 && int.TryParse(parts[1].Trim(), out var operand))
                     {

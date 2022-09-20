@@ -43,6 +43,10 @@
             this.listBox_IPStackViewer = new System.Windows.Forms.ListBox();
             this.textBox_MemoryDisplay = new System.Windows.Forms.TextBox();
             this.pictureBox_MemoryImage = new System.Windows.Forms.PictureBox();
+            this.button_OpenProgFile = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.button_SaveProgram = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_MemoryImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -197,17 +201,44 @@
             this.pictureBox_MemoryImage.TabIndex = 7;
             this.pictureBox_MemoryImage.TabStop = false;
             // 
+            // button_OpenProgFile
+            // 
+            this.button_OpenProgFile.Location = new System.Drawing.Point(40, 601);
+            this.button_OpenProgFile.Name = "button_OpenProgFile";
+            this.button_OpenProgFile.Size = new System.Drawing.Size(156, 35);
+            this.button_OpenProgFile.TabIndex = 3;
+            this.button_OpenProgFile.Text = "Load Program";
+            this.button_OpenProgFile.UseVisualStyleBackColor = true;
+            this.button_OpenProgFile.Click += new System.EventHandler(this.OpenProgFile_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Title = "Open Emulator File ";
+            // 
+            // button_SaveProgram
+            // 
+            this.button_SaveProgram.Location = new System.Drawing.Point(212, 601);
+            this.button_SaveProgram.Name = "button_SaveProgram";
+            this.button_SaveProgram.Size = new System.Drawing.Size(140, 35);
+            this.button_SaveProgram.TabIndex = 3;
+            this.button_SaveProgram.Text = "Save Program";
+            this.button_SaveProgram.UseVisualStyleBackColor = true;
+            this.button_SaveProgram.Click += new System.EventHandler(this.SaveProgFile_Click);
+            // 
             // Form_MachineEmulator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1283, 617);
+            this.ClientSize = new System.Drawing.Size(1283, 657);
             this.Controls.Add(this.pictureBox_MemoryImage);
             this.Controls.Add(this.textBox_MemoryDisplay);
             this.Controls.Add(this.label_PC);
             this.Controls.Add(this.textBox_ExecutingMessage);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btn_ExecuteStep);
+            this.Controls.Add(this.button_SaveProgram);
+            this.Controls.Add(this.button_OpenProgFile);
             this.Controls.Add(this.btn_Clear);
             this.Controls.Add(this.btn_Build);
             this.Controls.Add(this.listBox_ExeCode);
@@ -242,6 +273,10 @@
         private System.Windows.Forms.ListBox listBox_IPStackViewer;
         private System.Windows.Forms.TextBox textBox_MemoryDisplay;
         private System.Windows.Forms.PictureBox pictureBox_MemoryImage;
+        private System.Windows.Forms.Button button_OpenProgFile;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Button button_SaveProgram;
     }
 }
 

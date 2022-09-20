@@ -27,6 +27,7 @@ namespace Emulator
         SWAP,
         ROL3,
         HLT,
+        JMP,
         JZ,
         JNZ,
         STORE,
@@ -61,6 +62,7 @@ namespace Emulator
             OpCodeMap.Add("SWAP", (OpCodeEnum.SWAP, 2, _Fm.SWAP));
             OpCodeMap.Add("ROL3", (OpCodeEnum.ROL3, 3, _Fm.ROL3));
             OpCodeMap.Add("HLT", (OpCodeEnum.HLT, 0, _Fm.HLT));
+            OpCodeMap.Add("JMP", (OpCodeEnum.JZ, 0, _Fm.JMP));
             OpCodeMap.Add("JZ", (OpCodeEnum.JZ, 1, _Fm.JZ));
             OpCodeMap.Add("JNZ", (OpCodeEnum.JNZ, 1, _Fm.JNZ));
             OpCodeMap.Add("STORE", (OpCodeEnum.STORE, 0, _Fm.STORE));

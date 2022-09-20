@@ -1,33 +1,24 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+using System.IO;
 
 
 namespace Emulator
 {
-    //public class Viewers
-    //{
-    //    public Action<int> viewProgStackPush;
-    //    public Action viewProgStackPop;
-    //    public Action<int> viewIpStackPush;
-    //    public Action viewIpStackPop;
-    //    public Action<string, Bitmap> viewMemoryData;
-    //    public Action<int> viewPc;
-    //}
     public partial class Form_MachineEmulator : Form
-    {   
-        
-        private ProgramExecuter _executor;        
-        
+    {
+        private ProgramExecuter _executor;
+
         public Form_MachineEmulator()
         {
             InitializeComponent();
- 
+
             textBox_ProgramCode.Text = DemoPrograms.SimpleWithJumpsIPstore;
         }
 
         private void BuildCode_Click(object sender, EventArgs e)
-        {           
+        {
             var compiler = new Compiler();
             string sourceCode = textBox_ProgramCode.Text.Trim();
             var opcodes = compiler.BuildCode(sourceCode);
@@ -52,16 +43,16 @@ namespace Emulator
             listBox_StackViewer.Items.Clear();
         }
 
-        private void memoryViewer(string memStr , Bitmap memImage)
+        private void memoryViewer(string memStr, Bitmap memImage)
         {
             textBox_MemoryDisplay.Text = memStr;
             pictureBox_MemoryImage.Image = memImage;
         }
-        private  void stackViewerPush(int data)
+        private void stackViewerPush(int data)
         {
             listBox_StackViewer.Items.Add(data);
         }
-        private  void stackViewerPop()
+        private void stackViewerPop()
         {
             if (listBox_StackViewer.Items.Count > 0)
             {
@@ -94,20 +85,49 @@ namespace Emulator
 
         private void Clear_Click(object sender, EventArgs e)
         {
-            //textBox_ProgramCode.Clear();
+            textBox_ProgramCode.Clear();
             listBox_ExeCode.Items.Clear();
-            _executor.Reset();
-
-
+            if (_executor != null)
+            {
+                _executor.Reset();
+            }
         }
 
         private void Run_Click(object sender, EventArgs e)
         {
             while (_executor.ExecuteStep()) { }
-            //while(!_executor.IsHalted)
-            //{
-            //    btn_ExecuteStep.PerformClick();
-            //}
+        }
+
+        private void OpenProgFile_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.Filter = "Emulator files (*.emu)|*.emu|All files (*.*)|*.*";
+                DialogResult result = dialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    string progStr = File.ReadAllText(dialog.FileName);
+                    textBox_ProgramCode.Text = progStr;
+                }
+                else
+                {
+                    textBox_ProgramCode.Text = result.ToString();
+                }
+            }
+        }
+
+        private void SaveProgFile_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.Filter = "Emulator files (*.emu)|*.emu|All files (*.*)|*.*";
+                DialogResult result = dialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    File.WriteAllText(dialog.FileName, textBox_ProgramCode.Text);
+                }
+            }
+
         }
     }
     public class Viewers
