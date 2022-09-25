@@ -59,7 +59,7 @@ namespace Emulator
             _executionComponents._controller = new Controller(_view.viewPc);
             _executionComponents._dataStack = new DataStack(_view.viewProgStackPush, _view.viewProgStackPop);
             _executionComponents._ipStack= new DataStack(_view.viewIpStackPush, _view.viewIpStackPop);
-            _executionComponents._memory = new Memory(_view.viewMemoryData, 32);
+            _executionComponents._memory = new Memory(_view.viewMemoryData, 16);
 
         }
 
@@ -108,7 +108,7 @@ namespace Emulator
             _executionComponents._controller.Reset();
             _executionComponents._dataStack.CLEAR();
             _executionComponents._ipStack.CLEAR();
-            _executionComponents._memory = new Memory(_view.viewMemoryData, 32);
+            _executionComponents._memory = new Memory(_view.viewMemoryData, 16);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Emulator
         public Controller _controller;
         public Memory _memory;
         public ExecutingComponents() { }
-        public ExecutingComponents(DataStack dataStack, DataStack ipStack, Controller controller , Memory memory) //, int operand)
+        public ExecutingComponents(DataStack dataStack, DataStack ipStack, Controller controller , Memory memory)
         {
             _dataStack = dataStack;
             _ipStack = ipStack;
@@ -34,7 +34,7 @@ namespace Emulator
         public Func<ExecutingComponents, int, bool> STORE = (exeComp, arg) =>
         {
             ++exeComp._controller.PC;
-            byte val = (byte)exeComp._dataStack.TOP();
+            short val = (short)exeComp._dataStack.TOP();
             exeComp._memory.Store(arg, val);
             return true;
         };

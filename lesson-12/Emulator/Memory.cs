@@ -10,15 +10,15 @@ namespace Emulator
     public class Memory
     {
         private int _height = 16;
-        private int _len = 2;
-        private byte[,] _memory;
+        private int _len = 1;
+        private short[,] _memory;
         private MemoryImaging _memoryImage;
         Action<string, Bitmap> _dataViewer;
         public Memory(Action<string, Bitmap> dataViewer, int capacity)
         {
             _height = capacity / _len;
             if (capacity % _len > 0) _height++;
-            _memory = new byte[_height, _len];
+            _memory = new short[_height, _len];
             _dataViewer = dataViewer;
             
             _memoryImage = new MemoryImaging(_len, _height);
@@ -28,7 +28,7 @@ namespace Emulator
 
         public Bitmap Image => _memoryImage.Image;
         
-        public void Store(int address, byte data)
+        public void Store(int address, short data)
         {
             if (_height * _len < address) return;
             int r = address / _len;
@@ -38,7 +38,7 @@ namespace Emulator
             _dataViewer(this.ToString(), _memoryImage.Image);
         }
 
-        public byte Load(int address)
+        public short Load(int address)
         {
             if (_height * _len < address) return 0;
             int r = address / _len;
@@ -49,7 +49,7 @@ namespace Emulator
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            byte cellVal;
+            short cellVal;
             for(int r=0; r < _height; r++)
             {
                 for(int c=0; c < _len; c++)

@@ -198,6 +198,7 @@
             this.pictureBox_MemoryImage.Location = new System.Drawing.Point(847, 12);
             this.pictureBox_MemoryImage.Name = "pictureBox_MemoryImage";
             this.pictureBox_MemoryImage.Size = new System.Drawing.Size(360, 600);
+            this.pictureBox_MemoryImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox_MemoryImage.TabIndex = 7;
             this.pictureBox_MemoryImage.TabStop = false;
             // 
