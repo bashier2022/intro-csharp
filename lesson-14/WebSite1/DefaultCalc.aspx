@@ -19,9 +19,9 @@
 &nbsp;
             <asp:ListBox ID="listBox_IPStackViewer" runat="server" Height="400px" Width="120px"></asp:ListBox>
 &nbsp;&nbsp;&nbsp;
-            <asp:TextBox ID="textBox_MemoryDisplay" runat="server" Height="470px"></asp:TextBox>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:ImageMap ID="ImageMap_MemoryViewer" runat="server" Height="474px" Width="431px">
+            <asp:ListBox ID="ListBoxMemoryData" runat="server" Height="400px" Width="90px"></asp:ListBox>
+&nbsp;&nbsp;&nbsp;
+            <asp:ImageMap ID="ImageMap_MemoryViewer" runat="server" Height="363px" Width="312px">
             </asp:ImageMap>
         </p>
         <p style="margin-left: 40px">
@@ -35,7 +35,7 @@
         <p style="margin-left: 40px">
             <asp:Button ID="btnClear" runat="server" Text="Clear" Width="117px" />
 &nbsp;&nbsp;
-            <asp:Button ID="btnRun" runat="server" Text="RUN" Width="124px" />
+            <asp:Button ID="btnRun" runat="server" Text="RUN" Width="124px" OnClick="Run_Click" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <asp:TextBox ID="textBox_ExecutingMessage" runat="server" Width="201px"></asp:TextBox>
         </p>
@@ -44,17 +44,10 @@
 &nbsp;&nbsp;
             <asp:Button ID="btnSaveProg" runat="server" Text="Save Program" Width="125px" />
         </p>
+        
         <p style="margin-left: 40px">
-            <input id="File1" type="file" />
+            <asp:Image ID="ImageMemory" runat="server" Height="223px" Width="533px" />
         </p>
-        <p style="margin-left: 40px">
-            &nbsp;</p>
-        <p style="margin-left: 40px">
-            &nbsp;</p>
-        <p style="margin-left: 40px">
-            &nbsp;</p>
-        <p style="margin-left: 40px">
-            &nbsp;</p>
         <p style="margin-left: 40px">
             &nbsp;</p>
         <p style="margin-left: 40px">

@@ -9,21 +9,26 @@ using System.Drawing;
 
 public partial class DefaultCalc : System.Web.UI.Page
 {
-    public static ProgramExecuter _executor;
-    public static Compiler compiler = new Compiler();
-    public static List<Instruction> opcodes; // = compiler.BuildCode(sourceCode);
-    public static Viewers viewers;
+    int _id;
+    
     private void Page_Load(object sender, EventArgs e)
     {
-        textBox_ProgramCode.Text = DemoPrograms.SimpleWithJumpsIP;
+        textBox_ProgramCode.Text = DemoPrograms.SimpleWithJumpsIPstore;
+        //Session.Timeout = 1;
+        //Application.
+        _id = GetHashCode();
     }
 
 
-    private void memoryViewer(string memStr, Bitmap memImage)
+    private void memoryViewer(ListItemCollection items, Bitmap memImage)
     {
-        textBox_MemoryDisplay.Text = memStr;
-        //pictureBox_MemoryImage.Image = memImage;
-        //ImageMap_MemoryViewer = memImage;
+        ListBoxMemoryData.Items.Clear();
+        foreach(ListItem item in items)
+        {
+            ListBoxMemoryData.Items.Add(item);
+        }        
+        //ImageMap_MemoryViewer. = memImage;
+        //ImageMemory. = memImage.ToString();
     }
     private void stackViewerPush(int data)
     {
@@ -68,14 +73,15 @@ public partial class DefaultCalc : System.Web.UI.Page
     }
     private void CreateProgramExecuter(List<Instruction> instructions, Viewers viewers)
     {
-        _executor = new ProgramExecuter(instructions, viewers);
+        var _executor = new ProgramExecuter(instructions, viewers);
+        Session["X"]= _executor;
     }
     
     protected void BuildCode_Click(object sender, EventArgs e)
     {
-        compiler = new Compiler();
+        var compiler = new Compiler();
         string sourceCode = textBox_ProgramCode.Text.Trim();
-        opcodes = compiler.BuildCode(sourceCode);
+        var opcodes = compiler.BuildCode(sourceCode);
 
         listBox_ExeCode.Items.Clear();
         int label = 0;
@@ -83,15 +89,7 @@ public partial class DefaultCalc : System.Web.UI.Page
         {
             listBox_ExeCode.Items.Add($"{label++}: {opcode.ToString()}");
         }
-        viewers = new Viewers();
-
-        viewers.viewProgStackPush = stackViewerPush;
-        viewers.viewProgStackPop = stackViewerPop;
-        viewers.viewIpStackPush = IPstackViewerPush;
-        viewers.viewIpStackPop = IPstackViewerPop;
-        viewers.viewMemoryData = memoryViewer;
-        viewers.viewPc = PcViewer;
-        viewers.viewProcessMessage = ProcessMessageViewer;
+        Viewers viewers = GetViewers();
         //DisplayViewers(viewers);
         //_executor = new ProgramExecuter(opcodes, viewers);
         lblPC.Text = "PC:";
@@ -100,13 +98,34 @@ public partial class DefaultCalc : System.Web.UI.Page
         listBox_StackViewer.Items.Clear();
     }
 
-    
+    private Viewers GetViewers()
+    {
+        var viewers = new Viewers();
+
+        viewers.viewProgStackPush = stackViewerPush;
+        viewers.viewProgStackPop = stackViewerPop;
+        viewers.viewIpStackPush = IPstackViewerPush;
+        viewers.viewIpStackPop = IPstackViewerPop;
+        viewers.viewMemoryData = memoryViewer;
+        viewers.viewPc = PcViewer;
+        viewers.viewProcessMessage = ProcessMessageViewer;
+        return viewers;
+    }
+
 
     protected void ExecuteStep_Click(object sender, EventArgs e)
     {
-        _executor.ExecuteStep();
-        textBox_ExecutingMessage.Text = "bashier";
+        var _executor =(ProgramExecuter) Session["X"];
+        _executor.ExecuteStep(GetViewers());
     }
 
-    
+
+
+    protected void Run_Click(object sender, EventArgs e)
+    {
+        var _executor = (ProgramExecuter)Session["X"];
+        while (_executor.ExecuteStep(GetViewers()))
+        {
+        }
+    }
 }

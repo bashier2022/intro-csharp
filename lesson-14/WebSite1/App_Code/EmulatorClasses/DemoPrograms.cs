@@ -31,7 +31,7 @@ dup
 push 10
 sub
 jz 9
-popip
+dropip
 hlt";
     public static readonly string SimpleWithJumpsIP2
 = @"PUSH 0

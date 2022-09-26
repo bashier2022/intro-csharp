@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Drawing;
 using System.Text;
+using System.Web.UI.WebControls;
 
 /// <summary>
 /// Summary description for Memory
@@ -14,16 +15,16 @@ public class Memory
     private int _len = 1;
     private short[,] _memory;
     private MemoryImaging _memoryImage;
-    Action<string, Bitmap> _dataViewer;
-    public Memory(Action<string, Bitmap> dataViewer, int capacity)
+    public Action<ListItemCollection, Bitmap> _dataViewer;
+    public Memory(Action<ListItemCollection, Bitmap> dataViewer, int capacity)
     {
         _height = capacity / _len;
         if (capacity % _len > 0) _height++;
         _memory = new short[_height, _len];
         _dataViewer = dataViewer;
 
-        _memoryImage = null;//new MemoryImaging(_len, _height);
-        _dataViewer(this.ToString(), new Bitmap(20, 20));//_memoryImage.Image);
+        _memoryImage = new MemoryImaging(_len, _height);
+        _dataViewer(CollectData(), new Bitmap(20, 20));//_memoryImage.Image);
 
     }
 
@@ -35,8 +36,8 @@ public class Memory
         int r = address / _len;
         int c = address % _len;
         _memory[r, c] = data;
-        _memoryImage.Update(r, c, data);
-        _dataViewer(this.ToString(), _memoryImage.Image);
+        //_memoryImage.Update(r, c, data);
+        _dataViewer(CollectData(), _memoryImage.Image);
     }
 
     public short Load(int address)
@@ -46,7 +47,15 @@ public class Memory
         int c = address % _len;
         return _memory[r, c];
     }
-
+    public ListItemCollection CollectData()
+    {
+        var memItems = new ListItemCollection();
+        foreach(var item in _memory)
+        {
+            memItems.Add(item.ToString());
+        }
+        return memItems;
+    }
     public override string ToString()
     {
         StringBuilder sb = new StringBuilder();
@@ -61,7 +70,7 @@ public class Memory
                 else
                 { sb.Append($"{cellVal}  "); }
             }
-            sb.AppendLine();
+            sb.Append("\r\n");
         }
         return sb.ToString();
     }

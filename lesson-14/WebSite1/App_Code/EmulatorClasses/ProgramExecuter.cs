@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Drawing;
 using System.Text;
+using System.Web.UI.WebControls;
 
 
 /// <summary>
@@ -16,14 +17,14 @@ public class Viewers
     public Action viewProgStackPop;
     public Action<int> viewIpStackPush;
     public Action viewIpStackPop;
-    public Action<string, Bitmap> viewMemoryData;
+    public Action<ListItemCollection, Bitmap> viewMemoryData;
     public Action<int> viewPc;
     public Action<string> viewProcessMessage;
 }
 public class Controller
 {
     private int _pc = 0;
-    private Action<int> _viewPc;
+    public Action<int> _viewPc;
     public Controller(Action<int> viewPc)
     {
         if (viewPc != null)
@@ -56,13 +57,14 @@ public class ProgramExecuter
 {
     private ExecutingComponents _executionComponents;
     private List<Instruction> _instructions;
-
+    int _id;
     private Viewers _view;
     public ProgramExecuter(List<Instruction> instructions, Viewers viewers)
     {
         _instructions = instructions;
         _view = viewers;
         SetParameters();
+        _id = GetHashCode();
     }
 
     private void SetParameters()
@@ -88,9 +90,16 @@ public class ProgramExecuter
     {
         return intstruction._opCode == OpCodeEnum.DROP;
     }
-    public bool ExecuteStep()
+    public bool ExecuteStep(Viewers viewers)
     {
-
+        _view = viewers;
+        _executionComponents._dataStack.stackViewPush = viewers.viewProgStackPush;        
+        _executionComponents._dataStack.stackViewPop = viewers.viewProgStackPop;
+        _executionComponents._ipStack.stackViewPush = viewers.viewIpStackPush;
+        _executionComponents._ipStack.stackViewPop = viewers.viewIpStackPop;
+        _executionComponents._controller._viewPc = viewers.viewPc;
+        _executionComponents._memory._dataViewer = viewers.viewMemoryData;
+        
         if (IsHalted)
         {
             _view.viewProcessMessage("Halted");
