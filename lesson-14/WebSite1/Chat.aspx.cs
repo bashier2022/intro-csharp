@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 
 public partial class Chat : System.Web.UI.Page
 {
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["ChatItems"] != null)

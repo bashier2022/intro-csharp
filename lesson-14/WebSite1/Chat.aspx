@@ -10,8 +10,7 @@
     <form id="form1" runat="server">
         <div>
         &nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:ListBox ID="ListBoxChatMessages" runat="server" Height="188px" Width="893px"></asp:ListBox>
-&nbsp;&nbsp;&nbsp;
+            <asp:ListBox ID="ListBoxChatMessages" runat="server" EnableViewState="false" Height="188px" Width="893px"></asp:ListBox>
             <br />
             <br />
             <br />
@@ -19,7 +18,7 @@
 &nbsp;
             <asp:TextBox ID="tbChatMessage" runat="server" Height="44px" Width="663px"></asp:TextBox>
 &nbsp;&nbsp;
-            <asp:Button ID="btnSend" runat="server" OnClick="OnSend_Click" Text="Send" />
+            <asp:Button ID="btnSend" runat="server" OnClick="OnSend_Click" Text="Send" EnableViewState="false" />
         </div>
     </form>
 </body>
