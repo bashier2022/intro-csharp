@@ -8,8 +8,7 @@ namespace SQLiteProject
         {
             using (SchoolDb db = new SchoolDb())
             {
-                AddStudent(db);
-                
+                AddStudent(db);             
                 
                
             }

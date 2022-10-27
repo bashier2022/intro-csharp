@@ -1,0 +1,28 @@
+﻿@typeparam T
+@using System.Diagnostics.CodeAnalysis
+
+<table class="table">
+    <thead>
+        <tr>@TableHeader</tr>
+    </thead>
+    <tbody>
+        @if (RowTemplate is not null && Items != null)
+        {
+            foreach (var item in Items)
+            {
+                <tr>@RowTemplate(item)</tr>
+            }                        
+        }        
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public RenderFragment? TableHeader { get; set; }
+
+    [Parameter]
+    public RenderFragment<T>? RowTemplate { get; set; }
+
+    [Parameter, AllowNull]
+    public IReadOnlyList<T> Items { get; set; }
+}

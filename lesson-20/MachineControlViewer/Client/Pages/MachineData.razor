@@ -1,0 +1,97 @@
+﻿@page "/machinedata"
+
+@using MachineControlViewer.Shared
+@inject HttpClient Http
+
+<h3>MachineData</h3>
+
+<table>
+    <tr>
+        <td><button class="btn btn-success"  @onclick="() => GetPlatForms()">Get PlatForms</button></td>
+    </tr>
+</table>
+
+
+
+<h2 style="color:mediumslateblue;font-style:italic;">PlatForms:</h2>
+
+<TableComponent Items="platforms" Context="platform">
+    <TableHeader>
+        <th>PlatForm</th>       
+    </TableHeader>
+    <RowTemplate>
+        <td>@platform.Name</td>
+        <td>@platform.Id</td> 
+        <td><button class="btn btn-success" value="@platform.Id" @onclick="() => GetModules(platform.Id)">Get PlatForms</button></td>
+    </RowTemplate>
+</TableComponent>
+
+<TableComponent Items="modules" Context="module">
+    <TableHeader>
+        <th>Modules of the selected Platform</th>       
+    </TableHeader>
+    <RowTemplate>
+        <td>@module.Name</td>
+        <td>@module.Id</td> 
+        <td><button class="btn btn-success" value="@module.Id" @onclick="() => GetMeasurements(module.Id)">Get Measurements</button></td>
+    </RowTemplate>
+</TableComponent>
+
+@if (kyas == null)
+{
+    <p><em>Loading. Is Null untile jet..</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Measurement ID</th>
+                <th>DateTime</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in kyas)
+            {
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>                    
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@code {
+    List<PlattFormResponse> platforms =new List<PlattFormResponse>();
+    List<ModuleResponse> modules = new List<ModuleResponse>();
+    List<MeasurementResponse> kyas = new List<MeasurementResponse>();
+
+    private async void GetPlatForms()
+    {
+        platforms.Clear();
+        modules.Clear();
+        kyas.Clear();
+        platforms = await Http.GetFromJsonAsync<List<PlattFormResponse>>($"api/Platform/");
+
+        this.StateHasChanged();
+    }
+    private async void GetModules(int pfId)
+    {
+        modules.Clear();
+        kyas.Clear();
+        modules = await Http.GetFromJsonAsync<List<ModuleResponse>>($"api/Module/{pfId}");
+
+        this.StateHasChanged();
+    }
+
+    private async void GetMeasurements(int mdId)
+    {
+        kyas.Clear();
+        kyas = await Http.GetFromJsonAsync<List<MeasurementResponse>>($"api/Measurement/{mdId}");
+        this.StateHasChanged();
+
+    }
+
+}

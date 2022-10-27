@@ -1,0 +1,40 @@
+﻿@page "/initdb"
+@using MachineControlViewer.Shared
+@inject HttpClient Http
+
+<PageTitle>Muchine data</PageTitle>
+
+<h1>Muchine Data</h1>
+
+<p>This ia a test.</p>
+
+
+<h3>initialize</h3>
+
+@*<table>
+    <td></td>
+    <td><button class="btn btn-success"  @onclick="() => InitializeDb()">InitDB</button></td>
+</table>*@
+
+<table>
+    <tr>
+    <td></td>
+    <td><button class="btn btn-success"  @onclick="() => GetPlatforms()">InitDB</button></td>
+    </tr>
+</table>
+
+@code {
+    private async void InitializeDb()
+    {
+        bool ok = await Http.GetFromJsonAsync<bool>($"api/BootStrap/{true}");
+
+        //this.StateHasChanged();
+    }
+    private async void GetPlatforms()
+    {
+        bool ok = await Http.GetFromJsonAsync<bool>($"api/BootStrap/{true}");
+
+        //this.StateHasChanged();
+    }
+}
+
