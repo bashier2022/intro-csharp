@@ -21,5 +21,9 @@
     <ProjectReference Include="..\Shared\Project20221025.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 
 </Project>

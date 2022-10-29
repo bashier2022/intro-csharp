@@ -12,7 +12,8 @@ namespace Project20221025.Server.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int PlatformId { get; set; }
+        public Platform Platform { get; set; }
+        
         public IList<Measurement> Measurements { get; set; }
        
     }
@@ -27,8 +28,8 @@ namespace Project20221025.Server.Models
     public class Measurement
     {
         public int Id { get; set; }
-        public int MeasurementTypeId { get; set; }
-        public int ModuleId { get; set; }
+        public MeasurementType MeasurementType { get; set; }
+        public Module Module { get; set; }
         public DateTime Time { get; set; }
         public double Value { get; set; }
     }

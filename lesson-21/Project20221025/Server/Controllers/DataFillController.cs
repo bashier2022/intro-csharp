@@ -10,16 +10,17 @@ namespace Project20221025.Server.Controllers
     {
         // GET: api/<DataFillController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<bool> Get()        
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<DataFillController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
+            try
+            {
+                var s = new Services.FillFirstDataServices();
+                s.initialize();
+                return Ok(true);
+            }
+            catch (Exception x){
+                return BadRequest(false);
+            }
         }
 
         // POST api/<DataFillController>

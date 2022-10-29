@@ -29,11 +29,12 @@ namespace MachineControlViewer.Shared
     }
 
     public class MeasurementResponse
-    {        
+    {
         public int Id { set; get; }
         public DateTime Time { set; get; }
         public double Value { set; get; }
 
+        public MeasurementResponse() { }
         public MeasurementResponse(int id, DateTime dt, double measurementValue)
         {
             Id = id;
@@ -41,5 +42,6 @@ namespace MachineControlViewer.Shared
             Value = measurementValue;
         }
     }
+
 }
 

@@ -1,0 +1,24 @@
+﻿@page "/abcd"
+@inject HttpClient Http
+
+<h3>Abcd</h3>
+
+<h3>MachineData</h3>
+
+<table>
+    <tr>
+        <td><button class="btn btn-success"  @onclick="() => FillData()">First Data</button></td>
+    </tr>
+</table>
+
+@code {
+
+    private async void FillData()
+    {
+        
+        var ok = await Http.GetFromJsonAsync<bool>($"api/DataFill");
+
+        this.StateHasChanged();
+    }
+
+}

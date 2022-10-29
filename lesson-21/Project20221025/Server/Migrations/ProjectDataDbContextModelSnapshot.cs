@@ -109,26 +109,32 @@ namespace Project20221025.Server.Migrations
 
             modelBuilder.Entity("Project20221025.Server.Models.Measurement", b =>
                 {
-                    b.HasOne("Project20221025.Server.Models.MeasurementType", null)
+                    b.HasOne("Project20221025.Server.Models.MeasurementType", "MeasurementType")
                         .WithMany("Measurements")
                         .HasForeignKey("MeasurementTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Project20221025.Server.Models.Module", null)
+                    b.HasOne("Project20221025.Server.Models.Module", "Module")
                         .WithMany("Measurements")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("MeasurementType");
+
+                    b.Navigation("Module");
                 });
 
             modelBuilder.Entity("Project20221025.Server.Models.Module", b =>
                 {
-                    b.HasOne("Project20221025.Server.Models.Platform", null)
+                    b.HasOne("Project20221025.Server.Models.Platform", "Platform")
                         .WithMany("Modules")
                         .HasForeignKey("PlatformId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Platform");
                 });
 
             modelBuilder.Entity("Project20221025.Server.Models.MeasurementType", b =>

@@ -12,8 +12,8 @@ using Project20221025.Server.Models;
 namespace Project20221025.Server.Migrations
 {
     [DbContext(typeof(ProjectDataDbContext))]
-    [Migration("20221027135009_mig_01")]
-    partial class mig_01
+    [Migration("20221027172210_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,6 +45,10 @@ namespace Project20221025.Server.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MeasurementTypeId");
+
+                    b.HasIndex("ModuleId");
 
                     b.ToTable("Measurements");
                 });
@@ -105,13 +109,44 @@ namespace Project20221025.Server.Migrations
                     b.ToTable("Platforms");
                 });
 
+            modelBuilder.Entity("Project20221025.Server.Models.Measurement", b =>
+                {
+                    b.HasOne("Project20221025.Server.Models.MeasurementType", "MeasurementType")
+                        .WithMany("Measurements")
+                        .HasForeignKey("MeasurementTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project20221025.Server.Models.Module", "Module")
+                        .WithMany("Measurements")
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MeasurementType");
+
+                    b.Navigation("Module");
+                });
+
             modelBuilder.Entity("Project20221025.Server.Models.Module", b =>
                 {
-                    b.HasOne("Project20221025.Server.Models.Platform", null)
+                    b.HasOne("Project20221025.Server.Models.Platform", "Platform")
                         .WithMany("Modules")
                         .HasForeignKey("PlatformId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Platform");
+                });
+
+            modelBuilder.Entity("Project20221025.Server.Models.MeasurementType", b =>
+                {
+                    b.Navigation("Measurements");
+                });
+
+            modelBuilder.Entity("Project20221025.Server.Models.Module", b =>
+                {
+                    b.Navigation("Measurements");
                 });
 
             modelBuilder.Entity("Project20221025.Server.Models.Platform", b =>

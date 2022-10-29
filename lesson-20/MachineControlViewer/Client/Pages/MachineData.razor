@@ -37,32 +37,17 @@
     </RowTemplate>
 </TableComponent>
 
-@if (kyas == null)
-{
-    <p><em>Loading. Is Null untile jet..</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Measurement ID</th>
-                <th>DateTime</th>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var m in kyas)
-            {
-                <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>                    
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+
+<TableComponent Items="kyas" Context="k">
+    <TableHeader>
+        <th>Meassurements  of the selected Module</th>       
+    </TableHeader>
+    <RowTemplate>
+        <td>@k.Id</td>
+        <td>@k.Time</td> 
+        <td>@k.Value</td>
+    </RowTemplate>
+</TableComponent>
 @code {
     List<PlattFormResponse> platforms =new List<PlattFormResponse>();
     List<ModuleResponse> modules = new List<ModuleResponse>();

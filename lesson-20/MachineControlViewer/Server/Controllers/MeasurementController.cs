@@ -1,6 +1,5 @@
 ﻿using MachineControlViewer.Shared;
 using Microsoft.AspNetCore.Mvc;
-using MachineControlViewer.Server.Services;
 using MachineControlViewer.Server.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -20,7 +19,7 @@ namespace MachineControlViewer.Server.Controllers
 
         // GET api/<MeasurementController>/5
         [HttpGet("{moduleId}")]
-        public List<MeasurementResponse> Get(int moduleId)
+        public ActionResult<IEnumerable<MeasurementResponse>> Get(int moduleId)
         {
             //MeasurementService s = new MeasurementService();
             //List<MeasurementResponse> mm = s.AllMeasurments(moduleId);
@@ -28,19 +27,26 @@ namespace MachineControlViewer.Server.Controllers
             var q = from m in db.Measurements
                     where m.Module.Id == moduleId
                     select new MeasurementResponse(m.Id, m.Time, m.Value);
-            int n = 0;
-
-            List<MeasurementResponse> lst = new List<MeasurementResponse>();
-            foreach (var m in q)
+           if (q.Any())
             {
-                if (n < 10)
-                {
-                    n++;
-                    //lst.Add(new MeasurementResponse(m.Id, m.Time, m.MeasurementValue));
-                    lst.Add(m);
-                }
+                return Ok(q.ToList<MeasurementResponse>());
             }
-            return lst;
+            return NotFound();
+            
+                
+            //int n = 0;
+
+            //List<MeasurementResponse> lst = new List<MeasurementResponse>();
+            //foreach (var m in q)
+            //{
+            //    if (n < 10)
+            //    {
+            //        n++;
+            //        //lst.Add(new MeasurementResponse(m.Id, m.Time, m.MeasurementValue));
+            //        lst.Add(m);
+            //    }
+            //}
+           //return lst;
             //return mm;
         }
 

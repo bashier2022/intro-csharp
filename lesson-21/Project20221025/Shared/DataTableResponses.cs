@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project20221025.Shared
 {
-    internal class DataTableResponses
+    public class PlatformResponses
     {
     }
 }
